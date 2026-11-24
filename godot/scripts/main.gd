@@ -10,6 +10,7 @@ var font: Font
 var ui: CanvasLayer
 var panel: PanelContainer
 var content: VBoxContainer
+var key_badge: Label
 var score_badge: Label
 var level := 0
 var counts := [0, 0, 0]
@@ -143,9 +144,14 @@ func _make_ui() -> void:
 	scorebar.offset_top = 20
 	scorebar.offset_bottom = 68
 	root.add_child(scorebar)
-	score_badge = _label("鑰匙:%d/2 得分:%d" % [keys, scores[0] + scores[1]], 17, CREAM)
-	score_badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	scorebar.add_child(score_badge)
+	var badge_row := HBoxContainer.new()
+	badge_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	badge_row.add_theme_constant_override("separation", 18)
+	scorebar.add_child(badge_row)
+	key_badge = _label("鑰匙 %d / 2" % keys, 17, CREAM)
+	score_badge = _label("得分 %d" % (scores[0] + scores[1]), 17, CREAM)
+	badge_row.add_child(key_badge)
+	badge_row.add_child(score_badge)
 	panel = _panel(Color("#10283a"), 0.92)
 	panel.anchor_left = 0.52
 	panel.anchor_right = 0.96
@@ -371,6 +377,8 @@ func _layout_ui() -> void:
 	panel.offset_bottom = 0
 
 func _update_badge() -> void:
+	if is_instance_valid(key_badge):
+		key_badge.text = "鑰匙 %d / 2" % keys
 	if is_instance_valid(score_badge):
-		score_badge.text = "鑰匙:%d/2 得分:%d" % [keys, scores[0] + scores[1]]
+		score_badge.text = "得分 %d" % (scores[0] + scores[1])
 
