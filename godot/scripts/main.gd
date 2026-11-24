@@ -54,8 +54,23 @@ func _process(delta: float) -> void:
 		key_model.rotation.y = reward_spin * 0.08
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if view == "explore" and event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode in [KEY_E, KEY_ENTER, KEY_SPACE]: try_interact()
+	if view != "explore" or not event is InputEventKey or not event.pressed or event.echo:
+		return
+	if is_instance_valid(avatar):
+		var step := Vector2.ZERO
+		if event.keycode in [KEY_LEFT, KEY_A]: step.x -= 1
+		if event.keycode in [KEY_RIGHT, KEY_D]: step.x += 1
+		if event.keycode in [KEY_UP, KEY_W]: step.y -= 1
+		if event.keycode in [KEY_DOWN, KEY_S]: step.y += 1
+		if step != Vector2.ZERO:
+			var size := get_viewport().get_visible_rect().size
+			avatar.position += step.normalized() * 28.0
+			avatar.position.x = clampf(avatar.position.x, 28, size.x - 48)
+			avatar.position.y = clampf(avatar.position.y, size.y * 0.40, size.y - 70)
+			if step.x != 0: avatar.facing = signf(step.x)
+			avatar.queue_redraw()
+			_update_interaction_hint()
+	if event.keycode in [KEY_E, KEY_ENTER, KEY_SPACE]: try_interact()
 
 func _move_explorer(delta: float) -> void:
 	if not is_instance_valid(avatar): return

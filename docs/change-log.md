@@ -3,10 +3,10 @@
 ## v0.6 — 2026-11-24
 
 - Added a controllable pixel character to the room exploration loop.
-- Arrow keys and WASD move through the scene; a nearby glowing mission marker opens its level task on E, Enter, or Space.
+- Arrow keys and WASD move through the scene; short taps advance the explorer while a held key moves continuously. A nearby glowing mission marker opens its level task on E, Enter, or Space.
 - Added touch direction controls for narrow browser screens and an on-screen interaction button.
 - Kept each finance challenge, score, key reward, and final learning summary inside the existing two-level flow; updated FR-10 and input requirements.
-- Godot 4.7.2 Web export completed as `index-b88b66aaf467.pck`; browser verification of movement, mission distance, and mobile controls remains pending because local browser access was unavailable.
+- Godot 4.7.2 Web export completed as `index-bf266e68e1c2.pck`; public exploration screen verified, and approach/mission trigger verification is in progress.
 
 ## v0.5 — 2026-11-24
 
