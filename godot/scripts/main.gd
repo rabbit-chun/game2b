@@ -53,7 +53,7 @@ func _process(delta: float) -> void:
 		reward_spin += delta
 		key_model.rotation.y = reward_spin * 0.08
 
-func _unhandled_key_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if view != "explore" or not event is InputEventKey or not event.pressed or event.echo:
 		return
 	if is_instance_valid(avatar):
@@ -62,15 +62,18 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		if event.keycode in [KEY_RIGHT, KEY_D]: step.x += 1
 		if event.keycode in [KEY_UP, KEY_W]: step.y -= 1
 		if event.keycode in [KEY_DOWN, KEY_S]: step.y += 1
-		if step != Vector2.ZERO:
-			var size := get_viewport().get_visible_rect().size
-			avatar.position += step.normalized() * 28.0
-			avatar.position.x = clampf(avatar.position.x, 28, size.x - 48)
-			avatar.position.y = clampf(avatar.position.y, size.y * 0.40, size.y - 70)
-			if step.x != 0: avatar.facing = signf(step.x)
-			avatar.queue_redraw()
-			_update_interaction_hint()
+		_step_explorer(step)
 	if event.keycode in [KEY_E, KEY_ENTER, KEY_SPACE]: try_interact()
+
+func _step_explorer(direction: Vector2) -> void:
+	if direction == Vector2.ZERO or not is_instance_valid(avatar): return
+	var size := get_viewport().get_visible_rect().size
+	avatar.position += direction.normalized() * 38.0
+	avatar.position.x = clampf(avatar.position.x, 28, size.x - 48)
+	avatar.position.y = clampf(avatar.position.y, size.y * 0.40, size.y - 70)
+	if direction.x != 0: avatar.facing = signf(direction.x)
+	avatar.queue_redraw()
+	_update_interaction_hint()
 
 func _move_explorer(delta: float) -> void:
 	if not is_instance_valid(avatar): return
@@ -110,7 +113,8 @@ func _update_interaction_hint() -> void:
 	if is_instance_valid(mission_marker): mission_marker.modulate = Color.WHITE if near else Color(0.83, 0.83, 0.83, 0.94)
 
 func _create_touch_button(caption: String, action_name: String) -> Button:
-	var button := _button(caption, func(): touch_action = action_name)
+	var step := Vector2.LEFT if action_name == "left" else Vector2.RIGHT if action_name == "right" else Vector2.UP if action_name == "up" else Vector2.DOWN
+	var button := _button(caption, func(): _step_explorer(step))
 	button.custom_minimum_size = Vector2(48, 42)
 	button.button_down.connect(func(): touch_action = action_name)
 	button.button_up.connect(func(): if touch_action == action_name: touch_action = "")
@@ -154,21 +158,20 @@ func _show_exploration() -> void:
 	interact.offset_top = -90
 	interact.offset_bottom = -34
 	explorer_root.add_child(interact)
-	if size.x < 850:
-		touch_pad = GridContainer.new()
-		touch_pad.columns = 3
-		touch_pad.anchor_top = 1
-		touch_pad.anchor_bottom = 1
-		touch_pad.offset_left = 24
-		touch_pad.offset_top = -156
-		touch_pad.offset_bottom = -16
-		touch_pad.add_child(Control.new())
-		touch_pad.add_child(_create_touch_button("▲", "up"))
-		touch_pad.add_child(Control.new())
-		touch_pad.add_child(_create_touch_button("◀", "left"))
-		touch_pad.add_child(_create_touch_button("▼", "down"))
-		touch_pad.add_child(_create_touch_button("▶", "right"))
-		explorer_root.add_child(touch_pad)
+	touch_pad = GridContainer.new()
+	touch_pad.columns = 3
+	touch_pad.anchor_top = 1
+	touch_pad.anchor_bottom = 1
+	touch_pad.offset_left = 24
+	touch_pad.offset_top = -156
+	touch_pad.offset_bottom = -16
+	touch_pad.add_child(Control.new())
+	touch_pad.add_child(_create_touch_button("▲", "up"))
+	touch_pad.add_child(Control.new())
+	touch_pad.add_child(_create_touch_button("◀", "left"))
+	touch_pad.add_child(_create_touch_button("▼", "down"))
+	touch_pad.add_child(_create_touch_button("▶", "right"))
+	explorer_root.add_child(touch_pad)
 	_update_badge()
 
 func _resume_exploration() -> void:

@@ -1,5 +1,11 @@
 # Change log
 
+## v0.7 — 2026-11-24
+
+- Route keyboard movement from `_input` so arrow keys and WASD work while the game canvas is active.
+- Add a clickable direction pad on desktop and mobile; each tap advances the player through the room, and holding keyboard input still moves continuously.
+- Web export is `index-6154d144e2a0.pck`; direction-pad and mission proximity walkthrough are pending.
+
 ## v0.6 — 2026-11-24
 
 - Added a controllable pixel character to the room exploration loop.

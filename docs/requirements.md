@@ -1,4 +1,4 @@
-# Requirements baseline v0.5
+# Requirements baseline v0.6
 
 ## Functional requirements
 
@@ -20,7 +20,7 @@
 | ID | Requirement | Acceptance example |
 | --- | --- | --- |
 | NFR-01 | Traditional Chinese interface with child-readable wording. | Instructions and feedback use short, concrete sentences. |
-| NFR-02 | Support desktop and mobile browser input. | Arrow keys or WASD move the player; touch direction buttons move on narrow screens; nearby mission can be activated by E or an on-screen interaction button. |
+| NFR-02 | Support desktop and mobile browser input. | Arrow keys or WASD move the player; an on-screen direction pad works on desktop and touchscreens; nearby mission can be activated by E or an on-screen interaction button. |
 | NFR-03 | Avoid speed-dependent scoring and allow recovery from mistakes. | Wrong choices receive explanatory feedback and can be retried. |
 | NFR-04 | Do not persist personal information. | Refresh resets session state; browser storage contains no identifiers. |
 | NFR-05 | Deploy from GitHub Pages with correct relative paths. | Assets resolve beneath `/game2b/`, not `/`. |
