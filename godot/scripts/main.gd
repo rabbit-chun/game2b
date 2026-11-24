@@ -143,7 +143,7 @@ func _make_ui() -> void:
 	scorebar.offset_top = 20
 	scorebar.offset_bottom = 68
 	root.add_child(scorebar)
-	score_badge = _label("鑰匙  %d / 2   |   分數  %d" % [keys, scores[0] + scores[1]], 17, CREAM)
+	score_badge = _label("鑰匙 %d / 2    分數 %d" % [keys, scores[0] + scores[1]], 17, CREAM)
 	score_badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	scorebar.add_child(score_badge)
 	panel = _panel(Color("#10283a"), 0.92)
@@ -372,5 +372,5 @@ func _layout_ui() -> void:
 
 func _update_badge() -> void:
 	if is_instance_valid(score_badge):
-		score_badge.text = "鑰匙  %d / 2   |   分數  %d" % [keys, scores[0] + scores[1]]
+		score_badge.text = "鑰匙 %d / 2    分數 %d" % [keys, scores[0] + scores[1]]
 
