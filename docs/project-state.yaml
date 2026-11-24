@@ -1,11 +1,11 @@
 project_id: game2b-star-night-finance
 mode: guided
-current_phase: sdlc-verify
+current_phase: sdlc-operate
 requirements_version: 0.6
 gate_status: approved
 dt_handoff: approved
 sdlc_release: approved
-final_acceptance: pending
+final_acceptance: approved
 confirmed:
   - "Audience: elementary school children"
   - "Subject: everyday money management and introductory investing literacy"
@@ -45,9 +45,11 @@ required_tests:
 passed_tests:
   - "Godot 4.7.2 parses and compiles the arrow-key exploration and mission interaction code; Web release export completes and outputs index.html, index.js, index.wasm, content-hashed index-6154d144e2a0.pck (8,926,708 bytes), and audio worklets"
   - "Public GitHub Pages browser walkthrough after v0.4 completed both levels, unlocked keys, and displayed the final learning-summary screen"
+  - "Latest public GitHub Pages build: on-screen direction pad moved the explorer across the room into each mission marker; pressing E opened both mission challenges"
+  - "Latest public walkthrough completed both finance interactions: keys reached 2/2, level scores showed 60/90 each for the tested allocations, and final summary showed 120/180 and both learning outcomes"
   - "GitHub Pages serves the HTML entry, JavaScript, WebAssembly, PCK, and audio worklet with HTTP 200"
 known_limitations:
-  - "Published browser confirms exploration scene; direction-pad and approach/mission trigger walkthrough is in progress"
+  - "Mobile touch hardware itself was not available for a separate device check; the same on-screen direction controls were exercised with desktop pointer clicks"
   - "The exported WebAssembly and bundled CJK font make the first download relatively large"
   - "The educational game has not yet been playtested with children or reviewed by a financial-literacy educator"
   - "Tournament ratings are AI pre-scores with low confidence, not user research"

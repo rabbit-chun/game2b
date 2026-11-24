@@ -1,6 +1,6 @@
 # Visual direction update — D-008
 
-**Status:** Owner-directed visual implementation; final acceptance pending.
+**Status:** Owner-directed visual implementation; owner acceptance recorded 2026-11-24.
 
 **Reference:** Pixel-art room image supplied by the project owner on 2026-11-24.
 
@@ -23,5 +23,5 @@
 
 - Godot 4.7.2 Web export refreshed successfully; the latest content-hashed package is `index-31e038d0ee42.pck`.
 - Public GitHub Pages browser review confirmed the shop screen, both game interactions, reward/key screens, and final learning summary render.
-- Final owner acceptance remains pending. Text sizing and layout should receive a second review at a wider desktop viewport; the in-app browser validation viewport was narrow.
-- v0.6 adds a player avatar and nearby mission marker to the exploration screen. Godot Web export succeeds; new movement and proximity-trigger behavior still needs live browser review.
+- v0.7 desktop/public review verified arrow-key movement, direction-pad movement, E-triggered nearby mission screens for both levels, key rewards, level scores, and the final progress recap.
+- A separate physical mobile-device touch and wide desktop layout review remains useful; the current public walk-through used desktop Chrome.

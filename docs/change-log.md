@@ -1,5 +1,11 @@
 # Change log
 
+## v0.8 — 2026-11-24
+
+- Published build `index-6154d144e2a0.pck` to GitHub Pages and refreshed the page with a cache-busting URL for acceptance review.
+- Verified keyboard and on-screen direction movement, proximity-gated E mission triggers in both levels, both key rewards and scores, and the final 120/180 progress recap in Chrome.
+- Recorded the user's acceptance request and completed the SDLC verification handoff; direct mobile-device testing remains a limitation.
+
 ## v0.7 — 2026-11-24
 
 - Route keyboard movement from `_input` so arrow keys and WASD work while the game canvas is active.
