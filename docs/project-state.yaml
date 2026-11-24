@@ -1,7 +1,7 @@
 project_id: game2b-star-night-finance
 mode: guided
 current_phase: sdlc-verify
-requirements_version: 0.4
+requirements_version: 0.5
 gate_status: approved
 dt_handoff: approved
 sdlc_release: approved
@@ -10,6 +10,7 @@ confirmed:
   - "Audience: elementary school children"
   - "Subject: everyday money management and introductory investing literacy"
   - "Exactly two levels, each with one primary interaction unit"
+  - "Player walks through each scene with arrow keys and triggers the level task near an in-world mission marker"
   - "A solved level awards its key; show a score for each level and a final progress summary"
   - "Use Godot and publish a browser-playable version to rabbit-chun/game2b on GitHub Pages"
   - "Use Blender-produced 3D assets"
@@ -42,12 +43,13 @@ required_tests:
   - "Two levels, key gating, scoring, and final progress recap work end to end"
   - "Godot Web export serves successfully from the GitHub Pages path"
 passed_tests:
-  - "Godot 4.7.2 headless project startup completes without engine errors"
-  - "Godot 4.7.2 Web no-threads release export completes after v0.4 pixel-art update; output includes index.html, index.js, index.wasm, content-hashed PCK, and audio worklets"
-  - "Published browser walkthrough: level 1 awards a key and 90 points; level 2 awards the second key and 90 points; final recap displays 180/180 and both learning outcomes"
+  - "Godot 4.7.2 parses and compiles the arrow-key exploration and mission interaction code; Web release export completes and outputs index.html, index.js, index.wasm, content-hashed index-b88b66aaf467.pck (8,950,116 bytes), and audio worklets"
+  - "Public GitHub Pages browser walkthrough after v0.4 completed both levels, unlocked keys, and displayed the final learning-summary screen"
   - "GitHub Pages serves the HTML entry, JavaScript, WebAssembly, PCK, and audio worklet with HTTP 200"
 known_limitations:
+  - "In-game arrow-key movement, mission proximity, and touch controls have not been exercised in a browser during this turn because local browser access was unavailable"
   - "The exported WebAssembly and bundled CJK font make the first download relatively large"
   - "The educational game has not yet been playtested with children or reviewed by a financial-literacy educator"
   - "Tournament ratings are AI pre-scores with low confidence, not user research"
   - "The local Blender toolkit configuration/add-on is absent; Blender 5.3 itself is available"
+  - "Blender command-line validation of assets/dream_key.blend could not complete in this environment (process exited with Windows status -1073741790); in-game GLB rendering was verified in the browser"

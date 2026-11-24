@@ -1,5 +1,17 @@
 extends Node3D
 
+class ExplorerAvatar extends Control:
+	var facing := 1.0
+	func _draw() -> void:
+		draw_rect(Rect2(11, 1, 18, 13), Color("#f0c69a"))
+		draw_rect(Rect2(7, 0, 25, 7), Color("#d59a45"))
+		draw_rect(Rect2(10, 14, 21, 19), Color("#e9bd48"))
+		draw_rect(Rect2(13, 20, 4, 3), Color("#312b36"))
+		draw_rect(Rect2(24, 20, 4, 3), Color("#312b36"))
+		draw_rect(Rect2(13, 33, 7, 6), Color("#47364a"))
+		draw_rect(Rect2(23, 33, 7, 6), Color("#47364a"))
+		draw_rect(Rect2(12 if facing > 0 else 25, 7, 3, 3), Color("#322b35"))
+
 const GOLD := Color("#ffd77a")
 const INK := Color("#10273a")
 const CREAM := Color("#fff7e5")
@@ -21,6 +33,13 @@ var keys := 0
 var view := "welcome"
 var key_model: Node3D
 var reward_spin := 0.0
+var explorer_root: Control
+var avatar: ExplorerAvatar
+var mission_marker: PanelContainer
+var explorer_hint: Label
+var mission_position := Vector2.ZERO
+var touch_pad: GridContainer
+var touch_action := ""
 
 func _ready() -> void:
 	font = load(FONT_PATH)
@@ -29,9 +48,116 @@ func _ready() -> void:
 	_show_welcome()
 
 func _process(delta: float) -> void:
+	if view == "explore": _move_explorer(delta)
 	if is_instance_valid(key_model) and key_model.visible:
 		reward_spin += delta
 		key_model.rotation.y = reward_spin * 0.08
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if view == "explore" and event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode in [KEY_E, KEY_ENTER, KEY_SPACE]: try_interact()
+
+func _move_explorer(delta: float) -> void:
+	if not is_instance_valid(avatar): return
+	var direction := Vector2.ZERO
+	if Input.is_key_pressed(KEY_LEFT) or Input.is_key_pressed(KEY_A): direction.x -= 1
+	if Input.is_key_pressed(KEY_RIGHT) or Input.is_key_pressed(KEY_D): direction.x += 1
+	if Input.is_key_pressed(KEY_UP) or Input.is_key_pressed(KEY_W): direction.y -= 1
+	if Input.is_key_pressed(KEY_DOWN) or Input.is_key_pressed(KEY_S): direction.y += 1
+	match touch_action:
+		"left": direction.x -= 1
+		"right": direction.x += 1
+		"up": direction.y -= 1
+		"down": direction.y += 1
+	if direction.length() > 0:
+		direction = direction.normalized()
+		if direction.x != 0: avatar.facing = signf(direction.x)
+		var size := get_viewport().get_visible_rect().size
+		avatar.position += direction * 250.0 * delta
+		avatar.position.x = clampf(avatar.position.x, 28, size.x - 48)
+		avatar.position.y = clampf(avatar.position.y, size.y * 0.40, size.y - 70)
+		avatar.queue_redraw()
+	_update_interaction_hint()
+
+func try_interact() -> void:
+	if view != "explore" or not is_instance_valid(avatar): return
+	if avatar.position.distance_to(mission_position) > 92.0:
+		explorer_hint.text = "再靠近一點，才能和任務人物說話喔！"
+		return
+	panel.visible = true
+	if level == 1: _show_shop()
+	else: _show_gardens()
+
+func _update_interaction_hint() -> void:
+	if view != "explore" or not is_instance_valid(avatar): return
+	var near := avatar.position.distance_to(mission_position) <= 92.0
+	explorer_hint.text = "按 E／Enter 或下方互動鈕，開始任務！" if near else "用方向鍵走到發亮的任務地點。"
+	if is_instance_valid(mission_marker): mission_marker.modulate = Color.WHITE if near else Color(0.83, 0.83, 0.83, 0.94)
+
+func _create_touch_button(caption: String, action_name: String) -> Button:
+	var button := _button(caption, func(): touch_action = action_name)
+	button.custom_minimum_size = Vector2(48, 42)
+	button.button_down.connect(func(): touch_action = action_name)
+	button.button_up.connect(func(): if touch_action == action_name: touch_action = "")
+	return button
+
+func _show_exploration() -> void:
+	view = "explore"
+	panel.visible = false
+	_clear()
+	room_background.visible = true
+	var size := get_viewport().get_visible_rect().size
+	avatar = ExplorerAvatar.new()
+	avatar.name = "PlayerExplorer"
+	avatar.custom_minimum_size = Vector2(38, 40)
+	avatar.position = Vector2(size.x * 0.16, size.y * 0.76)
+	explorer_root.add_child(avatar)
+	mission_position = Vector2(size.x * 0.73, size.y * 0.62)
+	mission_marker = _panel(Color("#fff0ba"), 0.98)
+	mission_marker.position = mission_position - Vector2(70, 43)
+	mission_marker.custom_minimum_size = Vector2(140, 86)
+	explorer_root.add_child(mission_marker)
+	var marker_text := _label("✦ 任務 ✦\n%s" % ("月光雜貨店" if level == 1 else "星苗花園"), 17, GOLD)
+	marker_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	marker_text.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	mission_marker.add_child(marker_text)
+	var banner := _label("第 %d 關　%s" % [level, "月光雜貨店" if level == 1 else "星苗花園"], 19, CREAM)
+	banner.position = Vector2(30, 82)
+	banner.size = Vector2(380, 42)
+	explorer_root.add_child(banner)
+	explorer_hint = _label("用方向鍵走到發亮的任務地點。", 16, GOLD)
+	explorer_hint.position = Vector2(30, 122)
+	explorer_hint.size = Vector2(570, 42)
+	explorer_root.add_child(explorer_hint)
+	var interact := _button("互動 E", try_interact, true)
+	interact.anchor_left = 1
+	interact.anchor_right = 1
+	interact.anchor_top = 1
+	interact.anchor_bottom = 1
+	interact.offset_left = -174
+	interact.offset_right = -26
+	interact.offset_top = -90
+	interact.offset_bottom = -34
+	explorer_root.add_child(interact)
+	if size.x < 850:
+		touch_pad = GridContainer.new()
+		touch_pad.columns = 3
+		touch_pad.anchor_top = 1
+		touch_pad.anchor_bottom = 1
+		touch_pad.offset_left = 24
+		touch_pad.offset_top = -156
+		touch_pad.offset_bottom = -16
+		touch_pad.add_child(Control.new())
+		touch_pad.add_child(_create_touch_button("▲", "up"))
+		touch_pad.add_child(Control.new())
+		touch_pad.add_child(_create_touch_button("◀", "left"))
+		touch_pad.add_child(_create_touch_button("▼", "down"))
+		touch_pad.add_child(_create_touch_button("▶", "right"))
+		explorer_root.add_child(touch_pad)
+	_update_badge()
+
+func _resume_exploration() -> void:
+	_show_exploration()
 
 func _make_world() -> void:
 	var env := WorldEnvironment.new()
@@ -123,6 +249,10 @@ func _make_ui() -> void:
 	room_background.stretch_mode = TextureRect.STRETCH_SCALE
 	room_background.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(room_background)
+	explorer_root = Control.new()
+	explorer_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	explorer_root.mouse_filter = Control.MOUSE_FILTER_PASS
+	root.add_child(explorer_root)
 	var title := _label("小小夢魔  ｜  月光玩具盒", 25, GOLD)
 	title.position = Vector2(34, 22)
 	title.size = Vector2(520, 42)
@@ -191,6 +321,17 @@ func _label(text_value: String, size: int, color: Color) -> Label:
 	return label
 
 func _clear() -> void:
+	if is_instance_valid(avatar): avatar.queue_free()
+	if is_instance_valid(mission_marker): mission_marker.queue_free()
+	if is_instance_valid(touch_pad): touch_pad.queue_free()
+	avatar = null
+	mission_marker = null
+	touch_pad = null
+	if is_instance_valid(explorer_hint): explorer_hint.queue_free()
+	explorer_hint = null
+	for child in explorer_root.get_children():
+		explorer_root.remove_child(child)
+		child.queue_free()
 	if is_instance_valid(room_background): room_background.visible = true
 	for child in content.get_children():
 		content.remove_child(child)
@@ -235,7 +376,7 @@ func _show_welcome() -> void:
 	content.add_child(_label("沒有真實金錢，也沒有投資商品；可以慢慢試，答錯也能再來。", 15, Color("#f4d99c")))
 	var row := _row()
 	row.add_child(_button("開始探險", _start_level_one, true))
-	content.add_child(_label("操作：點按加減按鈕分配月光幣與星種。", 14, MUTED))
+	content.add_child(_label("操作：使用方向鍵移動，走近發亮的任務地點後按 E。手機可用畫面上的方向鈕。", 14, MUTED))
 
 func _start_level_one() -> void:
 	level = 1
@@ -248,11 +389,11 @@ func _start_level_two() -> void:
 	_show_game()
 
 func _show_game(message := "") -> void:
-	view = "game"
-	if level == 1:
-		_show_shop(message)
+	if view == "game":
+		if level == 1: _show_shop(message)
+		else: _show_gardens(message)
 	else:
-		_show_gardens(message)
+		_show_exploration()
 
 func _counter_row(index: int, title_text: String, detail: String) -> void:
 	var row := HBoxContainer.new()
@@ -283,7 +424,8 @@ func _change_count(index: int, amount: int) -> void:
 	counts[index] = max(0, int(counts[index]) + amount)
 	_show_game()
 
-func _show_shop(message: String) -> void:
+func _show_shop(message: String = "") -> void:
+	view = "game"
 	_clear()
 	_heading("第一關・月光雜貨店　｜　每關最高 90 分", "10 枚月光幣，怎麼安排？", "先照顧需要，也替一個重要願望存一點；剩下的再選喜歡的小物。把 10 枚都分完就能送出。")
 	_counter_row(0, "生活需要・雨衣", "下雨時能保護自己；雨衣需要 4 枚")
@@ -307,7 +449,8 @@ func _submit_shop() -> void:
 	_update_badge()
 	_show_reward("第一把鑰匙到手！", "你先照顧了需要，也讓存錢目標開始前進。選擇貼紙的數量由你決定。", scores[0], false)
 
-func _show_gardens(message: String) -> void:
+func _show_gardens(message: String = "") -> void:
+	view = "game"
 	_clear()
 	_heading("第二關・星苗花園　｜　每關最高 90 分", "6 顆星種，放進哪幾座花園？", "雲朵花園遇到夜風會少 1 顆。把種子放在不同花園，能減少集中在一處的風險；分散也不代表一定不會損失。")
 	_counter_row(0, "月亮花園", "安穩的月光苗圃")
@@ -347,7 +490,7 @@ func _show_reward(title_text: String, explanation: String, earned: int, final :=
 	if final:
 		row.add_child(_button("看看我的進步", _show_summary, true))
 	else:
-		row.add_child(_button("前往星苗花園", _start_level_two, true))
+		row.add_child(_button("走向星苗花園", _start_level_two, true))
 		row.add_child(_button("再玩第一關", _start_level_one))
 
 func _show_summary() -> void:

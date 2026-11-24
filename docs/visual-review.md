@@ -19,7 +19,9 @@
 - Color is accompanied by Traditional Chinese labels; buttons remain large Godot controls for pointer, touch, and keyboard focus.
 - Keep financial results deterministic and explain that diversification does not guarantee against loss.
 
-## Review status
+## Review status — 2026-11-24
 
-- Godot 4.7.2 Web no-threads export refreshed successfully after the visual update.
-- Post-change in-browser visual review is pending; the owner should review the exported game before final acceptance.
+- Godot 4.7.2 Web export refreshed successfully; the latest content-hashed package is `index-31e038d0ee42.pck`.
+- Public GitHub Pages browser review confirmed the shop screen, both game interactions, reward/key screens, and final learning summary render.
+- Final owner acceptance remains pending. Text sizing and layout should receive a second review at a wider desktop viewport; the in-app browser validation viewport was narrow.
+- v0.6 adds a player avatar and nearby mission marker to the exploration screen. Godot Web export succeeds; new movement and proximity-trigger behavior still needs live browser review.

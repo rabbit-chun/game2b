@@ -1,4 +1,4 @@
-# Requirements baseline v0.4
+# Requirements baseline v0.5
 
 ## Functional requirements
 
@@ -13,13 +13,14 @@
 | FR-07 | Integrate the Blender-made key asset into the game. | Imported GLB is visible as the key reward in Godot. |
 | FR-08 | Provide a Godot Web build deployable as a static site. | Root `index.html` and its companion files load from `/game2b/`. |
 | FR-09 | Keep the experience single-player and free of real financial services. | No account, personal data, real-money choice, or personalized recommendation. |
+| FR-10 | Let the player explore each room with keyboard arrow keys and trigger its finance mission by approaching a visible in-world marker and pressing the interaction key. | Mission panel stays closed while exploring, opens nearby on E/Enter/Space, and refuses activation when far away. |
 
 ## Non-functional requirements
 
 | ID | Requirement | Acceptance example |
 | --- | --- | --- |
 | NFR-01 | Traditional Chinese interface with child-readable wording. | Instructions and feedback use short, concrete sentences. |
-| NFR-02 | Support desktop and mobile browser input. | Pointer/touch and keyboard focus can operate the interactions. |
+| NFR-02 | Support desktop and mobile browser input. | Arrow keys or WASD move the player; touch direction buttons move on narrow screens; nearby mission can be activated by E or an on-screen interaction button. |
 | NFR-03 | Avoid speed-dependent scoring and allow recovery from mistakes. | Wrong choices receive explanatory feedback and can be retried. |
 | NFR-04 | Do not persist personal information. | Refresh resets session state; browser storage contains no identifiers. |
 | NFR-05 | Deploy from GitHub Pages with correct relative paths. | Assets resolve beneath `/game2b/`, not `/`. |

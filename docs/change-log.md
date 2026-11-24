@@ -1,5 +1,20 @@
 # Change log
 
+## v0.6 — 2026-11-24
+
+- Added a controllable pixel character to the room exploration loop.
+- Arrow keys and WASD move through the scene; a nearby glowing mission marker opens its level task on E, Enter, or Space.
+- Added touch direction controls for narrow browser screens and an on-screen interaction button.
+- Kept each finance challenge, score, key reward, and final learning summary inside the existing two-level flow; updated FR-10 and input requirements.
+- Godot 4.7.2 Web export completed as `index-b88b66aaf467.pck`; browser verification of movement, mission distance, and mobile controls remains pending because local browser access was unavailable.
+
+## v0.5 — 2026-11-24
+
+- Re-exported the Godot 4.7.2 Web build with the project export script; the current package is `index-31e038d0ee42.pck`.
+- Walked through both levels on the public GitHub Pages site and reached the final learning summary.
+- Recorded Blender command-line startup failure as an outstanding source-scene validation limitation; the GLB reward still renders in the game.
+- Updated skills audit, traceability, project-state evidence, and browser visual review.
+
 ## v0.4 — 2026-11-24
 
 - Replaced the moonlit 3D campus backdrop with a crisp, warm pixel-art dream shop based on the owner's attached reference image.
