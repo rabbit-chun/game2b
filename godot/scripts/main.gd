@@ -31,7 +31,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if is_instance_valid(key_model) and key_model.visible:
 		reward_spin += delta
-		key_model.rotation.y = reward_spin * 0.7
+		key_model.rotation.y = reward_spin * 0.08
 
 func _make_world() -> void:
 	var env := WorldEnvironment.new()
