@@ -1,7 +1,8 @@
 # Project brief — 小小夢魔：星夜理財夢
 
-**Status:** Approved scope; DT-to-SDLC handoff pending gameplay selection  
-**Requirements version:** 0.3  
+**Status:** Approved scope and pixel-art visual direction; final acceptance pending
+
+**Requirements version:** 0.4
 **Decision owner:** User / project owner
 
 ## Goal
@@ -36,13 +37,14 @@ AI supports concept generation, evidence-labeled pre-scoring, content drafts, an
 
 ## MVP and non-goals
 
-**MVP:** Godot project in GDScript; level 1 allocates a 10-coin purse among needs, savings, and wants; level 2 spreads fictional seeds across gardens and observes a fixed risk scenario; keys and scores; final progress recap; original Blender 3D key asset; Web export served at the root GitHub Pages path.
+**MVP:** Godot project in GDScript; level 1 allocates a 10-coin purse among needs, savings, and wants; level 2 spreads fictional seeds across gardens and observes a fixed risk scenario; keys and scores; final progress recap; original Blender 3D key asset; pixel-art dream shop based on the owner's attached reference; Web export served at the root GitHub Pages path.
 
 **Non-goals:** real money, brokerage or bank integrations, individual investment advice, student accounts, analytics, multiplayer, formal educational efficacy claims, and a research study.
 
 ## Constraints and risks
 
 - Use installed Godot 4.7.2 and Blender 5.3.
+- The attached pixel-art interior supersedes the earlier Moonlight Toybox visual direction; keep the Blender key as a 3D reward reveal.
 - GitHub Pages hosts static files; Web export must work at `/game2b/`, including asset paths and MIME types.
 - Godot export templates are absent and must be installed before a Web build.
 - Avoid presenting diversification as a guarantee against loss; keep all investment examples fictional.

@@ -1,5 +1,12 @@
 # Change log
 
+## v0.4 — 2026-11-24
+
+- Replaced the moonlit 3D campus backdrop with a crisp, warm pixel-art dream shop based on the owner's attached reference image.
+- Re-styled panels and buttons with parchment, wood, and garden colors and square borders.
+- Kept the Blender-made GLB dream key and reveal it on each level reward screen.
+- Recorded the visual direction change as D-008; the two finance interactions, keys, scores, and learning recap remain in scope.
+
 ## v0.3 — 2026-11-24
 
 - Owner selected tournament candidate B, Wish Shop Budget Sort.

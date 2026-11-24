@@ -1,7 +1,7 @@
 project_id: game2b-star-night-finance
 mode: guided
-current_phase: sdlc-acceptance
-requirements_version: 0.3
+current_phase: sdlc-verify
+requirements_version: 0.4
 gate_status: approved
 dt_handoff: approved
 sdlc_release: approved
@@ -17,6 +17,7 @@ confirmed:
   - "No G or C hard-elimination thresholds; use proposed measurable indicators"
   - "Gameplay concept B selected: Wish Shop Budget Sort"
   - "Visual direction selected: Moonlight Toybox; low-poly moonlit diorama with muted teal, warm gold, and glass-like panels"
+  - "Visual direction updated from the owner's attached reference: warm pixel-art dream shop; Blender dream key remains the 3D reward reveal"
 assumptions:
   - "A short, single-player experience is the default"
   - "Scores and keys are session-only; no student identity or analytics are collected"
@@ -42,7 +43,7 @@ required_tests:
   - "Godot Web export serves successfully from the GitHub Pages path"
 passed_tests:
   - "Godot 4.7.2 headless project startup completes without engine errors"
-  - "Godot 4.7.2 Web no-threads release export completes"
+  - "Godot 4.7.2 Web no-threads release export completes after v0.4 pixel-art update; output includes index.html, index.js, index.wasm, index.pck, and audio worklets"
   - "Published browser walkthrough: level 1 awards a key and 90 points; level 2 awards the second key and 90 points; final recap displays 180/180 and both learning outcomes"
   - "GitHub Pages serves the HTML entry, JavaScript, WebAssembly, PCK, and audio worklet with HTTP 200"
 known_limitations:
@@ -50,3 +51,4 @@ known_limitations:
   - "The educational game has not yet been playtested with children or reviewed by a financial-literacy educator"
   - "Tournament ratings are AI pre-scores with low confidence, not user research"
   - "The local Blender toolkit configuration/add-on is absent; Blender 5.3 itself is available"
+  - "Post-update browser visual review was blocked because this environment could not start Python or HttpListener local servers"

@@ -1,4 +1,4 @@
-# Requirements baseline v0.3
+# Requirements baseline v0.4
 
 ## Functional requirements
 
@@ -24,6 +24,12 @@
 | NFR-04 | Do not persist personal information. | Refresh resets session state; browser storage contains no identifiers. |
 | NFR-05 | Deploy from GitHub Pages with correct relative paths. | Assets resolve beneath `/game2b/`, not `/`. |
 | NFR-06 | Use Godot 4.7.2 and commit the Web export preset/source. | A clean checkout imports and exports with matching templates. |
+
+## Visual direction update
+
+- D-008 supersedes the earlier Moonlight Toybox selection with the owner's attached warm pixel-art shop interior.
+- Use crisp pixel edges, brick and wood surfaces, bookshelves, counter, rug, furniture, and plants; keep UI panels and controls readable in warm parchment and wood colors.
+- Preserve the Blender GLB as a visible 3D key reveal on level rewards.
 
 ## Locked educational diagnostic
 

@@ -5,6 +5,7 @@ const INK := Color("#10273a")
 const CREAM := Color("#fff7e5")
 const MUTED := Color("#b5c7cb")
 const FONT_PATH := "res://assets/fonts/NotoSansTC-VF.ttf"
+const ROOM_PATH := "res://assets/pixel_dream_shop.svg"
 
 var font: Font
 var ui: CanvasLayer
@@ -12,6 +13,7 @@ var panel: PanelContainer
 var content: VBoxContainer
 var key_badge: Label
 var score_badge: Label
+var room_background: TextureRect
 var level := 0
 var counts := [0, 0, 0]
 var scores := [0, 0]
@@ -35,42 +37,23 @@ func _make_world() -> void:
 	var env := WorldEnvironment.new()
 	var environment := Environment.new()
 	environment.background_mode = Environment.BG_COLOR
-	environment.background_color = Color("#08172b")
+	environment.background_color = Color("#c6a47c")
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	environment.ambient_light_color = Color("#92b9d0")
-	environment.ambient_light_energy = 0.55
+	environment.ambient_light_color = Color("#fff0d2")
+	environment.ambient_light_energy = 0.8
 	env.environment = environment
 	add_child(env)
 	var sun := DirectionalLight3D.new()
-	sun.rotation_degrees = Vector3(-52, -28, 0)
-	sun.light_color = Color("#ffd99a")
-	sun.light_energy = 0.9
+	sun.rotation_degrees = Vector3(-60, -24, 0)
+	sun.light_color = Color("#ffe3b4")
+	sun.light_energy = 0.65
 	add_child(sun)
 	var camera := Camera3D.new()
-	camera.position = Vector3(0, 7.8, 12.5)
-	camera.rotation_degrees = Vector3(-27, 0, 0)
+	camera.position = Vector3(-5.3, 2.2, 6.5)
+	camera.rotation_degrees = Vector3(-8, 0, 0)
+	camera.fov = 35
 	camera.current = true
 	add_child(camera)
-	_add_box("Moonstone courtyard", Vector3(0, -0.5, 0), Vector3(24, 0.8, 22), Color("#315b62"), 0.15)
-	_add_box("Shop base", Vector3(-3.2, 1.0, -1.7), Vector3(7, 3, 4.6), Color("#244458"), 0.2)
-	_add_box("Shop roof", Vector3(-3.2, 2.8, -1.7), Vector3(7.5, 0.4, 5), Color("#507b79"), 0.28)
-	_add_box("Door", Vector3(-3.2, 0.3, 0.66), Vector3(1.15, 1.9, 0.16), Color("#d99855"), 0.2)
-	_add_box("Window left", Vector3(-5.3, 1.35, 0.67), Vector3(1.2, 1.1, 0.14), Color("#9bd6d0"), 0.65)
-	_add_box("Window right", Vector3(-1.05, 1.35, 0.67), Vector3(1.2, 1.1, 0.14), Color("#9bd6d0"), 0.65)
-	_add_sphere("Moon", Vector3(-8, 5.7, -4), 1.25, Color("#f5d895"), 0.0)
-	for i in range(3):
-		var x := 2.0 + i * 2.3
-		_add_box("Garden %d" % i, Vector3(x, -0.02, -2.3), Vector3(1.7, 0.28, 2.4), [Color("#4d8178"), Color("#53788c"), Color("#668b79")][i], 0.16)
-		_add_box("Garden sign %d" % i, Vector3(x, 0.55, -3.5), Vector3(1.45, 0.42, 0.12), Color("#d4c18f"), 0.15)
-		for j in range(3):
-			_add_sphere("Seed light %d %d" % [i, j], Vector3(x - 0.42 + j * 0.42, 0.34, -2.25), 0.13, [Color("#d8e9a3"), Color("#c9e7ff"), Color("#ffdda5")][i], 0.3)
-	# Low-poly landmark trees and lamp posts make the page feel like a quiet miniature campus.
-	for x in [-8.0, 7.8]:
-		_add_cylinder("Tree trunk", Vector3(x, 0.6, 2.5), 0.15, 1.2, Color("#72573c"))
-		_add_sphere("Tree crown", Vector3(x, 1.65, 2.5), 0.75, Color("#79a58a"), 0.0)
-	for x in [-6.1, 0.0, 8.5]:
-		_add_cylinder("Moon lamp", Vector3(x, 1.15, 4.0), 0.07, 2.3, Color("#3d5661"))
-		_add_sphere("Lamp glow", Vector3(x, 2.35, 4.0), 0.2, Color("#ffe5a9"), 1.2)
 	var key_scene: PackedScene = load("res://assets/dream_key.glb")
 	if key_scene:
 		key_model = key_scene.instantiate()
@@ -132,11 +115,19 @@ func _make_ui() -> void:
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.mouse_filter = Control.MOUSE_FILTER_PASS
 	ui.add_child(root)
+	room_background = TextureRect.new()
+	room_background.name = "PixelArtDreamShop"
+	room_background.texture = load(ROOM_PATH)
+	room_background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	room_background.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	room_background.stretch_mode = TextureRect.STRETCH_SCALE
+	room_background.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(room_background)
 	var title := _label("小小夢魔  ｜  月光玩具盒", 25, GOLD)
 	title.position = Vector2(34, 22)
 	title.size = Vector2(520, 42)
 	root.add_child(title)
-	var scorebar := _panel(Color("#10273a"), 0.82)
+	var scorebar := _panel(Color("#72573f"), 0.96)
 	scorebar.anchor_left = 1
 	scorebar.anchor_right = 1
 	scorebar.offset_left = -250
@@ -152,7 +143,7 @@ func _make_ui() -> void:
 	score_badge = _label("得分 %d" % (scores[0] + scores[1]), 17, CREAM)
 	badge_row.add_child(key_badge)
 	badge_row.add_child(score_badge)
-	panel = _panel(Color("#10283a"), 0.92)
+	panel = _panel(Color("#f4e6ca"), 0.97)
 	panel.anchor_left = 0.52
 	panel.anchor_right = 0.96
 	panel.anchor_top = 0.13
@@ -178,9 +169,9 @@ func _panel(color: Color, alpha: float) -> PanelContainer:
 	var p := PanelContainer.new()
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(color.r, color.g, color.b, alpha)
-	style.border_color = Color("#78b9b0")
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(16)
+	style.border_color = Color("#8f6848")
+	style.set_border_width_all(4)
+	style.set_corner_radius_all(0)
 	p.add_theme_stylebox_override("panel", style)
 	return p
 
@@ -189,11 +180,12 @@ func _label(text_value: String, size: int, color: Color) -> Label:
 	label.text = text_value
 	label.add_theme_font_override("font", font)
 	label.add_theme_font_size_override("font_size", size)
-	label.add_theme_color_override("font_color", color)
+	label.add_theme_color_override("font_color", Color("#3d3027") if color == CREAM or color == MUTED else Color("#76502d") if color == GOLD else Color("#3e674b"))
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	return label
 
 func _clear() -> void:
+	if is_instance_valid(room_background): room_background.visible = true
 	for child in content.get_children():
 		content.remove_child(child)
 		child.queue_free()
@@ -201,7 +193,7 @@ func _clear() -> void:
 		key_model.visible = false
 
 func _heading(kicker: String, title_text: String, body: String) -> void:
-	content.add_child(_label(kicker, 14, Color("#9cd9ce")))
+	content.add_child(_label(kicker, 14, Color("#64805f")))
 	content.add_child(_label(title_text, 28, CREAM))
 	content.add_child(_label(body, 16, MUTED))
 
@@ -212,15 +204,15 @@ func _button(caption: String, callback: Callable, primary := false) -> Button:
 	b.add_theme_font_override("font", font)
 	b.add_theme_font_size_override("font_size", 17)
 	var normal := StyleBoxFlat.new()
-	normal.bg_color = Color("#e9bb68") if primary else Color("#24475a")
-	normal.border_color = Color("#ffe4a4") if primary else Color("#74a9a8")
-	normal.set_border_width_all(1)
-	normal.set_corner_radius_all(12)
+	normal.bg_color = Color("#d28b4f") if primary else Color("#66816b")
+	normal.border_color = Color("#8c5839") if primary else Color("#465f4c")
+	normal.set_border_width_all(3)
+	normal.set_corner_radius_all(0)
 	b.add_theme_stylebox_override("normal", normal)
 	var hover := normal.duplicate()
-	hover.bg_color = Color("#f5d58e") if primary else Color("#315d6d")
+	hover.bg_color = Color("#e2a46b") if primary else Color("#82977a")
 	b.add_theme_stylebox_override("hover", hover)
-	b.add_theme_color_override("font_color", INK if primary else CREAM)
+	b.add_theme_color_override("font_color", Color("#fff7e5"))
 	b.pressed.connect(callback)
 	return b
 
@@ -340,6 +332,7 @@ func _submit_gardens() -> void:
 func _show_reward(title_text: String, explanation: String, earned: int, final := false) -> void:
 	view = "reward"
 	_clear()
+	if is_instance_valid(room_background): room_background.visible = false
 	if is_instance_valid(key_model): key_model.visible = true
 	_heading("月光鑰匙・關卡完成", title_text, explanation)
 	content.add_child(_label("本關得分　%d / 90" % earned, 23, GOLD))

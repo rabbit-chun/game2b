@@ -51,3 +51,11 @@
 - **Owner/evidence:** User selected “月光玩具盒”.
 - **Rationale:** Matches the reference's playful night campus while keeping the money-choice panel clear.
 - **Status:** Accepted and implemented; browser visual review still pending.
+
+## D-008 — Update visual direction to the attached pixel-art interior
+
+- **Date:** 2026-11-24
+- **Decision:** Use the owner's attached image as reference: warm wood-brick walls, cream upper trim, colorful shelves, shop counter, rug, furniture and plants, rendered with crisp pixel edges. Keep the Blender-made dream key as a 3D reward reveal.
+- **Owner/evidence:** User's explicit request: “設計風格如圖片”.
+- **Rationale:** The image is the current visual instruction and supersedes the earlier Moonlight Toybox direction.
+- **Status:** Accepted; applied to the Godot Web build, pending final owner acceptance.

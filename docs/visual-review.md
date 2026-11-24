@@ -1,21 +1,24 @@
-# Visual direction gate — gameplay B
+# Visual direction update — D-008
 
-**Gameplay selection:** B — Wish Shop Budget Sort, approved by the project owner on 2026-11-24.  
-**Visual status:** approved by the project owner on 2026-11-24.  
-**Comparison control:** all three directions show the identical level 1 screen and state: level 1, 0/2 keys, 0 points, 10 moon-coins allocated as 4 needs (raincoat), 3 savings (star telescope), and 3 wants (star stickers). Only composition, world treatment, surfaces, lighting, and hierarchy change.
+**Status:** Owner-directed visual implementation; final acceptance pending.
 
-| Direction | Visual language | Readability / accessibility | Emotional tone | Godot fit | Main trade-off |
-| --- | --- | --- | --- | --- | --- |
-| **霓虹校園** | Dark school shop, glowing sign, luminous accents, scene on the left and decision panel on the right. | Strong labels and contrasting cards; glow must remain behind text and respect reduced motion. | Mysterious, adventurous; closest to the supplied campus screenshot. | Fits the existing top-down school map and the low-poly key. | Most atmospheric; highest risk that neon decorations compete with the money decision. |
-| **紙藝繪本** | Cut-paper hills, layered shop façade, warm page-like surfaces, three allocation cards in one row. | Large separated allocation areas and generous labels; color must not be the only category cue. | Gentle, playful, classroom-friendly. | Simple layered 2D UI and Godot Control nodes; low art cost. | Most approachable; less like a dark dream-school adventure. |
-| **月光玩具盒** | Low-poly diorama with a lit platform, muted teal night, moonstone materials, floating glass-like decision panel. | High visual hierarchy and less decoration; transparency must keep text contrast stable. | Quiet, crafted, dreamlike. | Strongest match for the Blender GLB and Godot 3D scene. | Best asset integration; needs careful mobile scaling and transparent-panel contrast. **Selected.** |
+**Reference:** Pixel-art room image supplied by the project owner on 2026-11-24.
 
-## Same-screen visual tournament criteria
+## Implemented visual language
 
-Compare the options by first-action clarity, child-readable text, focus on the budget decision, emotional tone, mobile reflow, keyboard/touch target size, reduced-motion behavior, and cost to build and maintain. The owner chooses one direction or requests a revision. No scoring or recommendation is used to substitute for that choice.
+- Warm wood-brick interior, cream transom windows, green trim, colorful shelves, checkout counter, seating rug, water cooler, potted plant, and sofa.
+- Crisp SVG edges and simple color blocks to match the reference's pixel-art treatment.
+- Parchment content panel with square wood-colored frame; square garden-green and terracotta buttons.
+- Existing Blender-made 3D dream key appears in the reward view.
 
-## Approval
+## Interaction and readability criteria
 
-- Selected direction: 月光玩具盒 / Moonlight Toybox
-- Conditions/revision: keep the decision panel high contrast and responsive; retain the quiet low-poly moonlit school atmosphere.
-- Owner/date: project owner / 2026-11-24
+- The same two approved money interactions remain primary: allocate 10 coins, then spread 6 fictional seeds.
+- Scores, key count, progress feedback, and the final learning summary remain visible in the UI.
+- Color is accompanied by Traditional Chinese labels; buttons remain large Godot controls for pointer, touch, and keyboard focus.
+- Keep financial results deterministic and explain that diversification does not guarantee against loss.
+
+## Review status
+
+- Godot 4.7.2 Web no-threads export refreshed successfully after the visual update.
+- Post-change in-browser visual review is pending; the owner should review the exported game before final acceptance.
