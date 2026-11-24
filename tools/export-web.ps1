@@ -25,6 +25,9 @@ $hash = (Get-FileHash -LiteralPath $packPath -Algorithm SHA256).Hash.ToLowerInva
 $packName = "index-$hash.pck"
 $versionedPack = Join-Path $repoRoot $packName
 Move-Item -LiteralPath $packPath -Destination $versionedPack -Force
+Get-ChildItem -LiteralPath $repoRoot -Filter 'index-*.pck' -File |
+    Where-Object { $_.Name -ne $packName -and $_.DirectoryName -eq $repoRoot } |
+    Remove-Item -Force
 
 $html = [IO.File]::ReadAllText($htmlPath, [Text.Encoding]::UTF8)
 $html = $html.Replace('<html lang="en">', '<html lang="zh-Hant">')

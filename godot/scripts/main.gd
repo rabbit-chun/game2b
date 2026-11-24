@@ -58,7 +58,7 @@ func _make_world() -> void:
 	if key_scene:
 		key_model = key_scene.instantiate()
 		key_model.position = Vector3(-5.3, 1.15, 1.6)
-		key_model.scale = Vector3.ONE * 0.95
+		key_model.scale = Vector3.ONE * 0.18
 		key_model.visible = false
 		add_child(key_model)
 
@@ -127,10 +127,10 @@ func _make_ui() -> void:
 	title.position = Vector2(34, 22)
 	title.size = Vector2(520, 42)
 	root.add_child(title)
-	var scorebar := _panel(Color("#72573f"), 0.96)
+	var scorebar := _panel(Color("#f4e6ca"), 0.97)
 	scorebar.anchor_left = 1
 	scorebar.anchor_right = 1
-	scorebar.offset_left = -250
+	scorebar.offset_left = -390
 	scorebar.offset_right = -30
 	scorebar.offset_top = 20
 	scorebar.offset_bottom = 68

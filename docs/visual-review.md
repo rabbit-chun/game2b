@@ -9,7 +9,8 @@
 - Warm wood-brick interior, cream transom windows, green trim, colorful shelves, checkout counter, seating rug, water cooler, potted plant, and sofa.
 - Crisp SVG edges and simple color blocks to match the reference's pixel-art treatment.
 - Parchment content panel with square wood-colored frame; square garden-green and terracotta buttons.
-- Existing Blender-made 3D dream key appears in the reward view.
+- A readable, compact HUD shows key count and score at the top right.
+- Existing Blender-made 3D dream key appears at a reduced scale in the reward view.
 
 ## Interaction and readability criteria
 

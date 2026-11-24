@@ -6,6 +6,7 @@
 - Re-styled panels and buttons with parchment, wood, and garden colors and square borders.
 - Kept the Blender-made GLB dream key and reveal it on each level reward screen.
 - Recorded the visual direction change as D-008; the two finance interactions, keys, scores, and learning recap remain in scope.
+- Refined the in-game HUD spacing and the 3D reward key scale after the published browser walkthrough.
 
 ## v0.3 — 2026-11-24
 
