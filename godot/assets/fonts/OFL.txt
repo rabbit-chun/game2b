@@ -1,0 +1,12 @@
+Noto Sans TC font license notice
+
+Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+The full license text is available at https://scripts.sil.org/OFL and in the
+Google Fonts Noto Sans TC source repository:
+https://github.com/google/fonts/tree/main/ofl/notosanstc
+
+The font may be used, studied, copied, embedded, modified, and redistributed
+under OFL 1.1. It may not be sold by itself. Bundled copies must include the
+copyright notice and OFL license. Modified versions may not use reserved names.

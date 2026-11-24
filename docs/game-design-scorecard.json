@@ -1,0 +1,21 @@
+{
+  "profile": {
+    "name": "Learning-first",
+    "weights": {"L": 0.5, "E": 0.15, "M": 0.1, "A": 0.25},
+    "penalties": {"G": 0.15, "C": 0.1},
+    "hard_thresholds": {"G": null, "C": null, "R_edu_min": 60},
+    "evidence_mapping": "docs/requirements.md",
+    "evidence_label": "ai_pre_score",
+    "confidence": "low"
+  },
+  "candidates": [
+    {"id":"A","name":"星夜校園尋路","hard_gates":{"two_levels":true,"distinct_interactions":true,"visible_consequence_and_explanation":true,"age_accessible_no_speed_gate":true,"financial_safety":true,"godot_web_fit":true,"R_edu_at_least_60":true},"scores":{"game_experience":82,"research_validity":81,"development_feasibility":86},"purpose_fit_label":"Purpose Fit","education":{"L":88,"E":82,"M":78,"A":84,"G":16,"C":22,"R_edu":80.5},"evidence_level":"ai_pre_score","confidence":"low"},
+    {"id":"B","name":"願望雜貨店預算分配","hard_gates":{"two_levels":true,"distinct_interactions":true,"visible_consequence_and_explanation":true,"age_accessible_no_speed_gate":true,"financial_safety":true,"godot_web_fit":true,"R_edu_at_least_60":true},"scores":{"game_experience":83,"research_validity":84,"development_feasibility":90},"purpose_fit_label":"Purpose Fit","education":{"L":90,"E":79,"M":78,"A":85,"G":15,"C":23,"R_edu":81.35},"evidence_level":"ai_pre_score","confidence":"low"},
+    {"id":"C","name":"夢想儲蓄工作坊","hard_gates":{"two_levels":true,"distinct_interactions":true,"visible_consequence_and_explanation":true,"age_accessible_no_speed_gate":true,"financial_safety":true,"godot_web_fit":true,"R_edu_at_least_60":true},"scores":{"game_experience":80,"research_validity":86,"development_feasibility":89},"purpose_fit_label":"Purpose Fit","education":{"L":88,"E":74,"M":77,"A":90,"G":10,"C":20,"R_edu":81.8},"evidence_level":"ai_pre_score","confidence":"low"},
+    {"id":"D","name":"月光投資花園","hard_gates":{"two_levels":true,"distinct_interactions":true,"visible_consequence_and_explanation":true,"age_accessible_no_speed_gate":true,"financial_safety":true,"godot_web_fit":true,"R_edu_at_least_60":true},"scores":{"game_experience":81,"research_validity":82,"development_feasibility":81},"purpose_fit_label":"Purpose Fit","education":{"L":90,"E":83,"M":78,"A":76,"G":15,"C":29,"R_edu":79.1},"evidence_level":"ai_pre_score","confidence":"low"},
+    {"id":"E","name":"投資線索偵探","hard_gates":{"two_levels":true,"distinct_interactions":true,"visible_consequence_and_explanation":true,"age_accessible_no_speed_gate":true,"financial_safety":true,"godot_web_fit":true,"R_edu_at_least_60":true},"scores":{"game_experience":83,"research_validity":89,"development_feasibility":78},"purpose_fit_label":"Purpose Fit","education":{"L":83,"E":84,"M":82,"A":77,"G":18,"C":34,"R_edu":75.45},"evidence_level":"ai_pre_score","confidence":"low"},
+    {"id":"F","name":"星夜選擇日記","hard_gates":{"two_levels":true,"distinct_interactions":true,"visible_consequence_and_explanation":true,"age_accessible_no_speed_gate":true,"financial_safety":true,"godot_web_fit":true,"R_edu_at_least_60":true},"scores":{"game_experience":84,"research_validity":82,"development_feasibility":91},"purpose_fit_label":"Purpose Fit","education":{"L":84,"E":88,"M":90,"A":82,"G":22,"C":18,"R_edu":79.6},"evidence_level":"ai_pre_score","confidence":"low"},
+    {"id":"G","name":"限時星市衝刺","hard_gates":{"two_levels":true,"distinct_interactions":true,"visible_consequence_and_explanation":true,"age_accessible_no_speed_gate":false,"financial_safety":true,"godot_web_fit":true,"R_edu_at_least_60":false},"scores":{"game_experience":76,"research_validity":70,"development_feasibility":91},"purpose_fit_label":"Purpose Fit","education":{"L":75,"E":89,"M":76,"A":58,"G":52,"C":64,"R_edu":58.75},"evidence_level":"ai_pre_score","confidence":"low"},
+    {"id":"H","name":"夢境快問快答擂台","hard_gates":{"two_levels":true,"distinct_interactions":true,"visible_consequence_and_explanation":false,"age_accessible_no_speed_gate":true,"financial_safety":true,"godot_web_fit":true,"R_edu_at_least_60":false},"scores":{"game_experience":68,"research_validity":64,"development_feasibility":96},"purpose_fit_label":"Purpose Fit","education":{"L":70,"E":85,"M":80,"A":61,"G":48,"C":50,"R_edu":58.8},"evidence_level":"ai_pre_score","confidence":"low"}
+  ]
+}
