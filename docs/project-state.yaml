@@ -1,10 +1,10 @@
 project_id: game2b-star-night-finance
 mode: guided
-current_phase: sdlc-build
+current_phase: sdlc-acceptance
 requirements_version: 0.3
 gate_status: approved
 dt_handoff: approved
-sdlc_release: pending
+sdlc_release: approved
 final_acceptance: pending
 confirmed:
   - "Audience: elementary school children"
@@ -40,8 +40,13 @@ required_tests:
   - "Godot project imports and runs on the installed Godot version"
   - "Two levels, key gating, scoring, and final progress recap work end to end"
   - "Godot Web export serves successfully from the GitHub Pages path"
-passed_tests: []
+passed_tests:
+  - "Godot 4.7.2 headless project startup completes without engine errors"
+  - "Godot 4.7.2 Web no-threads release export completes"
+  - "Published browser walkthrough: level 1 awards a key and 90 points; level 2 awards the second key and 90 points; final recap displays 180/180 and both learning outcomes"
+  - "GitHub Pages serves the HTML entry, JavaScript, WebAssembly, PCK, and audio worklet with HTTP 200"
 known_limitations:
-  - "Current published commit is a standalone HTML/JavaScript game, not a Godot project"
-  - "Godot Web project is being implemented for the approved Moonlight Toybox direction"
+  - "The exported WebAssembly and bundled CJK font make the first download relatively large"
+  - "The educational game has not yet been playtested with children or reviewed by a financial-literacy educator"
+  - "Tournament ratings are AI pre-scores with low confidence, not user research"
   - "The local Blender toolkit configuration/add-on is absent; Blender 5.3 itself is available"
