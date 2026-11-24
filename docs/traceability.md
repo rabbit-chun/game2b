@@ -9,7 +9,7 @@
 | FR-05: final progress recap | Summary explains needs/wants, saving, diversification and uncertainty | Published final screen showed both learning outcomes and scores | Verified in browser |
 | FR-06: age-appropriate finance content | Fictional coins, savings goal, and fixed garden scenario; no recommendations or guaranteed returns | Scenario copy and requirements review | Implemented; child/expert validation pending |
 | FR-07: Blender asset in game | GLB imported in Godot, shown on reward screen; source `.blend` retained | Reward key visible in published browser walkthrough; Godot Web pack log | Verified in browser |
-| FR-08: Godot Web/GitHub Pages | Web preset exports root `index.html` and companion files | Godot 4.7.2 generated HTML, JS, WASM, PCK, and audio worklets; previous published build had HTTP 200 evidence | New static package ready; publishing the updated package remains |
+| FR-08: Godot Web/GitHub Pages | Web preset exports root `index.html` and companion files; export script assigns the PCK a content-hashed filename to avoid serving a stale cached game | Godot 4.7.2 export plus successful GitHub Pages build/deploy | Published; post-cache-fix visual walkthrough pending |
 | Visual D-008: pixel-art interior | `godot/assets/pixel_dream_shop.svg`, warm square-corner UI, and Blender GLB reward reveal | Refreshed Godot 4.7.2 Web no-threads export completed | Implemented; post-change browser visual review pending |
 | FR-09: session-only, no identity | Game state is in memory; no analytics or login | Source review | Implemented; remote browser inspection pending |
 | NFR-01: Traditional Chinese | Bundled Noto Sans TC font and Traditional Chinese UI | Published browser walkthrough showed Traditional Chinese UI | Verified in browser |

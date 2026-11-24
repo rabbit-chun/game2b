@@ -10,13 +10,13 @@
 
 1. 安裝 Godot 4.7.2，匯入 `godot/project.godot`。
 2. 安裝 Godot 4.7.2 匯出範本。此專案使用 Web no-threads 範本。
-3. 在 **Project → Export** 選擇 **Web**，輸出到專案根目錄的 `index.html`。
-4. 提交根目錄所有 `index.*` 匯出檔案並推送到 `main`。
+3. 執行下方匯出腳本。腳本會輸出 Godot Web 檔案、以內容雜湊命名 PCK，並更新 HTML 載入路徑，避免 Pages/CDN 快取舊遊戲封包。
+4. 提交根目錄的 HTML、JS、WASM、版本化 PCK 和 worklet 檔案並推送到 `main`。
 
 也可在 Windows PowerShell 執行：
 
 ```powershell
-C:\Godot\Godot_v4.7.2-stable_win64_console.exe --headless --path godot --export-release Web ..\index.html
+powershell -ExecutionPolicy Bypass -File tools/export-web.ps1
 ```
 
 `godot/assets/dream_key.glb` 是遊戲使用的 Blender 模型；原始 `.blend` 與可重建腳本在 `assets/` 和 `tools/`。繁體中文字型為 Noto Sans TC，隨附 OFL 授權說明。
