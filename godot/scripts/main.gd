@@ -140,7 +140,13 @@ func _make_ui() -> void:
 	badge_row.add_theme_constant_override("separation", 18)
 	scorebar.add_child(badge_row)
 	key_badge = _label("鑰匙 %d / 2" % keys, 17, CREAM)
+	key_badge.custom_minimum_size = Vector2(132, 36)
+	key_badge.autowrap_mode = TextServer.AUTOWRAP_OFF
+	key_badge.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	score_badge = _label("得分 %d" % (scores[0] + scores[1]), 17, CREAM)
+	score_badge.custom_minimum_size = Vector2(110, 36)
+	score_badge.autowrap_mode = TextServer.AUTOWRAP_OFF
+	score_badge.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	badge_row.add_child(key_badge)
 	badge_row.add_child(score_badge)
 	panel = _panel(Color("#f4e6ca"), 0.97)
