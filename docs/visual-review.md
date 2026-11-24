@@ -10,7 +10,7 @@
 - Crisp SVG edges and simple color blocks to match the reference's pixel-art treatment.
 - Parchment content panel with square wood-colored frame; square garden-green and terracotta buttons.
 - A readable, compact HUD shows key count and score at the top right.
-- Existing Blender-made 3D dream key appears at a reduced scale in the reward view.
+- Existing Blender-made 3D dream key appears at a readable scale in the unobstructed reward area.
 
 ## Interaction and readability criteria
 

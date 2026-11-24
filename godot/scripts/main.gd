@@ -57,8 +57,8 @@ func _make_world() -> void:
 	var key_scene: PackedScene = load("res://assets/dream_key.glb")
 	if key_scene:
 		key_model = key_scene.instantiate()
-		key_model.position = Vector3(-5.3, 1.15, 1.6)
-		key_model.scale = Vector3.ONE * 0.18
+		key_model.position = Vector3(-6.6, 1.15, 1.6)
+		key_model.scale = Vector3.ONE * 0.35
 		key_model.visible = false
 		add_child(key_model)
 
