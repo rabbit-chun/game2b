@@ -59,3 +59,22 @@
 - **Owner/evidence:** User's explicit request: “設計風格如圖片”.
 - **Rationale:** The image is the current visual instruction and supersedes the earlier Moonlight Toybox direction.
 - **Status:** Accepted; applied to the Godot Web build, pending final owner acceptance.
+
+## D-009 — Replace abstract interactions with an interactive school-day journey
+
+- **Date:** 2026-11-25
+- **Decision:** Use two walkable scenes: home-to-school with a breakfast planning mission, followed by a school mission for a missing eraser and a fictional seed-garden investment event. Preserve arrow-key movement, nearby in-world task triggers, keys, scores, feedback, and the end progress recap.
+- **Owner/evidence:** Owner's explicit redesign request and examples. The reference game contributes everyday money resources, spending/saving/investment decisions, visible consequences and scoring; the owner explicitly asks for direct walking exploration rather than keeping its dice-board movement.
+- **Acceptance rule:** First key requires a plan that covers breakfast, saves at least 10 of the 50 fictional dollars, and retains school pocket money. Second key requires allocating all six seed tokens across at least two gardens. Unsuccessful attempts explain the goal and can be revised.
+- **Visual decision:** Keep D-008's original warm pixel-art palette, create original home-route and classroom SVG scenes, and retain the Blender-made 3D key reveal. No reference-game artwork or characters are copied.
+- **Impact:** Replaces the prior 10-coin needs/savings/wants interaction and generic mission room; updates FR-02/03/10 and adds FR-11. Requirements version increases to 0.7. Reopen implementation and public acceptance checks.
+- **Status:** Owner-directed scope; implementation and public verification in progress.
+
+## D-010 — Adopt the linked ten-day savings rules
+
+- **Date:** 2026-11-25
+- **Decision:** Replace the prior one-screen-per-level allocation game with a ten-day savings challenge split into two five-day, walkable chapters. Preserve the reference's Easy/Medium/Hard starting balance, happiness, allowance schedule, goal, daily choice preview, delayed consequences, zero-happiness early end, and day-ten goal check. Adapt scenario content to breakfast on the home-to-school route, a missing eraser at school, and a fictional seed-garden risk choice.
+- **Owner/evidence:** User explicitly said all gameplay should be revised to match the linked reference rules and supplied breakfast/eraser examples. The Markdown destination is `https://rabbit-chun.github.io/game1b/`.
+- **Acceptance rule:** Complete days 1–5 to earn key one. Earn key two only if day-ten savings meet the selected toy target. Each chapter displays its score; final recap shows learning progress and goal result.
+- **Impact:** Requirements increment from 0.7 to 0.8. Replaced the earlier 50-dollar one-time breakfast budget and six-seed allocation counters; re-opened implementation, release, and public acceptance checks.
+- **Status:** Implemented locally; fresh Web export and public acceptance pending.

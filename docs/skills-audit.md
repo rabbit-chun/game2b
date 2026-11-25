@@ -1,17 +1,16 @@
 # Requested skills audit
 
-| Skill | Applied work | Status |
+| Requested capability | Applied work | Status / evidence |
 | --- | --- | --- |
-| `dt-sdlc` with `dt` and `sdlc` | Project brief, requirements baseline, state, decision/change logs, traceability, gates, and acceptance status are maintained. Pixel-art direction is recorded in D-008 from the owner's reference image. | Resumed at `sdlc-verify`, then verified keyboard/tap movement and proximity-triggered missions on the public site; two levels and final learning summary completed. Owner requested acceptance and public update; final acceptance recorded. |
-| `game-design` | Completed the evidence-based concept tournament and Learning-first reward profile. Implemented the selected Wish Shop Budget Sort gameplay with two choices, recovery, key rewards, scores, investment-risk feedback, and a learning recap. | Implemented. Tournament scores remain AI pre-scores; child playtesting is still needed. |
-| `blender-toolkit` | Existing Blender-made dream key source (`assets/dream_key.blend`) and GLB (`assets/dream_key.glb`) are integrated as the Godot reward model. | Browser confirms the GLB renders in both reward sequences. Blender Toolkit add-on/config is absent, and Blender CLI exited with Windows status `-1073741790`, so direct source-scene validation was not possible this turn. |
-| Godot Web delivery | Godot 4.7.2 source, Web preset, CJK font, Blender GLB, pixel-art room SVG, and static root export are present. The export script assigns the PCK a content hash to avoid stale CDN package caching. | Current published build is `index-6154d144e2a0.pck`. Public browser verification covered arrow-key movement, direction-pad movement into both mission markers, E activation, both keys, per-level scoring, and the final 120/180 learning recap. Godot emitted user-settings write warnings because the execution environment could not write the user settings directory. |
+| `DT_SDLC_Skill` (workspace `dt-sdlc`, coordinating `dt` + `sdlc`) | Resumed the existing guided project state; revised the approved scope as change D-010, incremented requirements to 0.8, refreshed brief, testable requirements, traceability, decision and change logs, and reopened release verification. | Applied. Implementation, Godot verification, browser acceptance, and release handoff are tracked below. No stage approval is fabricated. |
+| `game-design` | Preserved the user's previously approved Learning-first weights, evidence labeling, accessible recovery and feedback. Reworked the approved game into ten daily scenarios, three difficulty presets, immediate choice previews, savings/happiness rules, delayed consequences, a goal check, two five-day score chapters, and a fictional diversification scenario. | Applied. Ratings remain AI pre-scores; no child test or educator review has occurred. Reference game is used for mechanics; original text/art are used here. |
+| `blender-skills` (available workspace capability: `blender-toolkit`) | Checked the toolkit installation/configuration and Blender 5.3 availability. Kept the previously made Blender source `assets/dream_key.blend` and its GLB in the Godot reward sequence. | Applied to existing asset workflow. Toolkit add-on/config is not installed, and Blender CLI help previously exited with code 1 without output; no new Blender model was produced for this revision. |
+| Godot Web release | Use Godot 4.7.2, the project's Web preset, relative static paths, hashed PCK export, and GitHub Pages project path. | The source project imports and headless startup passed after the rules revision. A fresh export and published browser walkthrough are still required before claiming acceptance. |
 
-## Evidence and limitations
+## Evidence and limits
 
-- `docs/game-design-scorecard.json` passed the deterministic tournament validator; this is a design aid, not child-play evidence.
-- The original Blender key is bundled as a GLB and visibly renders on the public site; the pixel-art room is a project-authored SVG based on the supplied visual reference.
-- Score and keys remain session-only. The game collects no identity data, uses no real financial product, and does not promise returns.
-- The Web export includes a bundled CJK font and may take time to download. No child playtest or financial-literacy educator review has occurred.
-- The Blender Toolkit add-on/config is not installed. Headless Blender source validation was blocked by a process startup failure; no Blender file changes were made.
-- Physical mobile-device touch behavior was not tested; pointer activation of the shared on-screen direction pad was tested in the public browser.
+- Skill files used: `.agents/skills/dt-sdlc/SKILL.md`, `.agents/skills/game-design/SKILL.md`, `.agents/skills/blender-toolkit/SKILL.md`.
+- `docs/game-design-scorecard.json` is a design aid, not user/player evidence.
+- State and scores are session-only; the game asks for no identity information and has no real financial service.
+- The reference's difficulty amounts/schedules/goals are reproduced; daily story choices are adapted to the requested school journey.
+- Child playtesting, financial educator review, and physical mobile-device checks remain outstanding.

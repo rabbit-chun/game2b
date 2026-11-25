@@ -1,87 +1,54 @@
 # Project brief — 小小夢魔：星夜理財夢
 
-**Status:** Approved scope and pixel-art visual direction; final acceptance pending
-
-**Requirements version:** 0.4
+**Status:** Reference-rule redesign; implementation and release verification in progress
+**Requirements version:** 0.8
 **Decision owner:** User / project owner
 
 ## Goal
 
-Deliver a short, child-friendly financial-literacy game with two meaningful interactions, a key reward for each completed level, per-level scores, and an end-of-game progress summary. Run the game in a browser from a Godot Web export and publish it on the existing GitHub Pages site.
+Deliver a Traditional Chinese financial-literacy game for elementary students. The player walks from home to school, interacts with in-world scenario markers, and completes a ten-day saving challenge based on the user's linked example. The ten days form two five-day chapters with scores and key rewards. The ending shows savings progress toward a toy goal and learning recap. Publish a Godot Web build to the existing GitHub Pages site.
 
-## Target users and context
+## Audience and learning context
 
-Elementary-school children playing independently or with a parent/teacher. Use Traditional Chinese and familiar everyday situations. Exact grade band is open for prototype calibration.
+Children playing alone or with a parent/teacher. Practice everyday budgeting, needs versus wants, saving toward a goal, delayed consequences, happiness, and fictional investment risk. The experience uses no real money, financial products, advice, identity data, or analytics.
 
-## Evidence and pain points
+## Evidence and design basis
 
-The project owner specified everyday financial management and investment as the subject, children as the audience, two key-gated levels, scores and a closing progress summary. External curriculum references support needs-versus-wants, budgeting, goals and saving, and risk/reward as useful financial-literacy concepts. These sources are design grounding, not evidence that this game improves learning.
+The owner rejected the earlier design and identified two concrete school-day examples: choose a breakfast plan on the trip to school and respond when an eraser is missing in class. The linked reference is a ten-day saving challenge. It uses difficulty presets; starting savings, happiness, and allowance schedules; daily decisions with immediate feedback; delayed consequences; a toy savings goal; and a day-ten result. This game adapts that cycle to an explorable home-to-school and school setting. The educational framing is informed by these external sources, which are not evidence that this game improves learning:
 
 - [OECD PISA 2022 Financial Literacy Framework](https://www.oecd.org/en/publications/pisa-2022-assessment-and-analytical-framework_dfe0bf9c-en/full-report/component-4.html)
 - [CFPB: School-age children and saving](https://www.consumerfinance.gov/consumer-tools/money-as-you-grow/school-age-children-preteens/explore-saving/)
 - [SEC Investor.gov: Asset allocation and diversification](https://www.investor.gov/introduction-investing/getting-started/asset-allocation)
 
-## Problem statement
+## Gameplay and outputs
 
-Children need an engaging, low-stakes way to practice prioritizing money, planning for a savings goal, and recognizing that investment outcomes are uncertain. The current published prototype presents these ideas as multiple-choice questions; it does not yet have a Godot project or a consequential in-world interaction loop.
-
-## Inputs, processing, and outputs
-
-- **Inputs:** child selects, sorts, allocates, or inspects fictional money/assets through mouse, touch, or keyboard-accessible controls.
-- **Processing:** deterministic level rules update fictional resources, explain consequences, award points, and unlock a key when the interaction is complete.
-- **Outputs:** visible per-level score, two key states, contextual learning feedback, and an end summary of concepts practiced.
-
-## AI role and authority
-
-AI supports concept generation, evidence-labeled pre-scoring, content drafts, and implementation. The owner selects the gameplay and visual directions. No AI model runs in the game or makes financial recommendations.
+- **Controls:** Arrow keys/WASD move the avatar; reach the glowing in-world marker, then click it or press E/Enter/Space. Touch devices have an on-screen pad.
+- **Daily loop:** Choose among three plans, preview projected savings/happiness and explanation, then confirm. Balance updates by current savings + daily allowance − spending. Happiness is bounded from 0–20; the reference's mood modifiers and selected delayed events are applied.
+- **Chapters:** Days 1–5 are the home-to-school route with breakfast, supplies, rain, lunch, and missing eraser. Days 6–10 include weekend choices, the toy-shop goal, another eraser event, the fictional garden-risk event, and final breakfast. Each chapter scores up to 90 points.
+- **Keys:** The first chapter key follows completion of day five. The second key requires day-ten savings to meet the selected toy goal. Zero happiness ends the challenge early.
+- **Ending:** Display both chapter scores, total score, savings against goal, happiness, keys, and learning recap.
 
 ## MVP and non-goals
 
-**MVP:** Godot project in GDScript; level 1 allocates a 10-coin purse among needs, savings, and wants; level 2 spreads fictional seeds across gardens and observes a fixed risk scenario; keys and scores; final progress recap; original Blender 3D key asset; pixel-art dream shop based on the owner's attached reference; Web export served at the root GitHub Pages path.
-
-**Non-goals:** real money, brokerage or bank integrations, individual investment advice, student accounts, analytics, multiplayer, formal educational efficacy claims, and a research study.
+Godot 4.7.2 GDScript, two explorable scene backdrops, original pixel-art UI, bundled Traditional Chinese font, existing Blender-made 3D key, and a static Web export for `https://rabbit-chun.github.io/game2b/`. Excluded: accounts, identity/analytics, multiplayer, real financial products, personalized recommendations, and learning-efficacy claims.
 
 ## Constraints and risks
 
-- Use installed Godot 4.7.2 and Blender 5.3.
-- The attached pixel-art interior supersedes the earlier Moonlight Toybox visual direction; keep the Blender key as a 3D reward reveal.
-- GitHub Pages hosts static files; Web export must work at `/game2b/`, including asset paths and MIME types.
-- Godot export templates are absent and must be installed before a Web build.
-- Avoid presenting diversification as a guarantee against loss; keep all investment examples fictional.
-- Make text readable and input forgiving for younger players; avoid speed as the primary scoring factor.
-- No playtest or learning outcome data have been collected.
-
-## Delivery context
-
-Browser-playable Godot Web export in the root of `rabbit-chun/game2b`, hosted at `https://rabbit-chun.github.io/game2b/`. Godot source and Blender source assets remain in the repository.
-
-## Success measures
-
-- The Web export loads at the GitHub Pages URL and on a local static server.
-- A player can complete both levels, receive both keys, see each score, and see the progress recap.
-- Feedback explains why a financial choice is helpful or risky.
-- Keyboard and touch/mouse input work without relying on timed reflexes.
-- No player identity or financial data leave the browser.
-- Learning effectiveness remains unverified until appropriate child playtesting.
-
-## Assumptions to test
-
-- A two-interaction, 3–5 minute session can hold elementary players’ attention.
-- Fictional visual metaphors can teach investment risk without implying guaranteed profit.
-- The existing dream-school theme remains appropriate after the gameplay direction is chosen.
+- Keep all outcomes fictional and avoid implying guaranteed investment returns.
+- Keep choices recoverable before confirmation; no speed-based scoring.
+- The Blender Toolkit configuration is absent; the existing `.blend` and GLB remain integrated.
+- The WebAssembly bundle is large due to Godot and the CJK font.
+- No child playtest or financial educator review has been completed.
 
 ## Acceptance examples
 
-1. Completing level 1 awards the first key, shows its score, and enables level 2.
-2. Completing level 2 awards the second key and shows both level scores plus a skills-based progress recap.
-3. Selecting a risky fictional investment produces an explanation that losses are possible; spreading fictional assets reduces some concentration risk but does not guarantee a gain.
-4. A player can finish without entering personal information or interacting with real financial products.
-
-## Open questions
-
-- Which of the three comparable visual directions should be used?
-- What grade band should receive the final reading-level pass?
+1. Start each difficulty and verify its starting balance, happiness, daily allowances, and savings goal.
+2. Walk to the day-one breakfast shop marker; a distant trigger fails, a nearby click or E opens three plans.
+3. Preview and confirm a choice; savings/happiness update and score is added. The day-eight missing-eraser task offers borrowing and purchase plans.
+4. Complete days 1–5 to receive key one and a score /90; complete days 6–10 to see the second score and goal result. Key two appears only when the goal is met.
+5. Final recap shows both chapter scores, total /180, goal progress, happiness, keys, and the lesson that diversification cannot guarantee against loss.
+6. Publish and play the static Godot Web build from the project Pages path.
 
 ## User approval
 
-Scope and delivery are confirmed from the user's original request and the follow-up specifying Godot Web. Education diagnostic profile, evidence indicators, and gameplay B were selected by the user. Visual approval remains pending.
+The owner requested the redesign, linked rule set, player movement and in-scene tasks, use of the required skills, Godot Web publication, and public-site update. These instructions authorize implementation and redeployment to the existing `rabbit-chun/game2b` site.

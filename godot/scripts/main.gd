@@ -18,6 +18,8 @@ const CREAM := Color("#fff7e5")
 const MUTED := Color("#b5c7cb")
 const FONT_PATH := "res://assets/fonts/NotoSansTC-VF.ttf"
 const ROOM_PATH := "res://assets/pixel_dream_shop.svg"
+const MORNING_ROUTE_PATH := "res://assets/morning_school_route.svg"
+const CLASSROOM_PATH := "res://assets/school_classroom.svg"
 
 var font: Font
 var ui: CanvasLayer
@@ -27,10 +29,23 @@ var key_badge: Label
 var score_badge: Label
 var room_background: TextureRect
 var level := 0
-var counts := [0, 0, 0]
 var scores := [0, 0]
 var keys := 0
 var view := "welcome"
+var difficulty := "easy"
+var day := 1
+var savings := 80
+var happiness := 18
+var daily_allowance := 24
+var toy_goal := 260
+var selected_choice := -1
+var pending_events: Array = []
+var daily_log: Array[String] = []
+var phase_points := 0
+var last_delta := 0
+var last_feedback := ""
+var history: Array[Dictionary] = []
+var game_over := false
 var key_model: Node3D
 var reward_spin := 0.0
 var explorer_root: Control
@@ -103,13 +118,12 @@ func try_interact() -> void:
 		explorer_hint.text = "再靠近一點，才能和任務人物說話喔！"
 		return
 	panel.visible = true
-	if level == 1: _show_shop()
-	else: _show_gardens()
+	_show_day_mission()
 
 func _update_interaction_hint() -> void:
 	if view != "explore" or not is_instance_valid(avatar): return
 	var near := avatar.position.distance_to(mission_position) <= 92.0
-	explorer_hint.text = "按 E／Enter 或下方互動鈕，開始任務！" if near else "用方向鍵走到發亮的任務地點。"
+	explorer_hint.text = ("點任務牌或按 E／Enter，開始第 %d 天任務！" % day) if near else "用方向鍵走到發亮的任務地點。"
 	if is_instance_valid(mission_marker): mission_marker.modulate = Color.WHITE if near else Color(0.83, 0.83, 0.83, 0.94)
 
 func _create_touch_button(caption: String, action_name: String) -> Button:
@@ -124,6 +138,8 @@ func _show_exploration() -> void:
 	view = "explore"
 	panel.visible = false
 	_clear()
+	var at_school := day == 5 or day >= 8
+	room_background.texture = load(CLASSROOM_PATH if at_school else MORNING_ROUTE_PATH)
 	room_background.visible = true
 	var size := get_viewport().get_visible_rect().size
 	avatar = ExplorerAvatar.new()
@@ -131,16 +147,15 @@ func _show_exploration() -> void:
 	avatar.custom_minimum_size = Vector2(38, 40)
 	avatar.position = Vector2(size.x * 0.16, size.y * 0.76)
 	explorer_root.add_child(avatar)
-	mission_position = Vector2(size.x * 0.73, size.y * 0.62)
+	mission_position = Vector2(size.x * (0.73 if at_school else 0.51), size.y * 0.62)
 	mission_marker = _panel(Color("#fff0ba"), 0.98)
 	mission_marker.position = mission_position - Vector2(70, 43)
 	mission_marker.custom_minimum_size = Vector2(140, 86)
 	explorer_root.add_child(mission_marker)
-	var marker_text := _label("✦ 任務 ✦\n%s" % ("月光雜貨店" if level == 1 else "星苗花園"), 17, GOLD)
-	marker_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	marker_text.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	mission_marker.add_child(marker_text)
-	var banner := _label("第 %d 關　%s" % [level, "月光雜貨店" if level == 1 else "星苗花園"], 19, CREAM)
+	var marker_button := _button("✦ %s ✦\n點我互動" % _location_name(), try_interact, true)
+	marker_button.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	mission_marker.add_child(marker_button)
+	var banner := _label("第 %d 關・第 %d 天　%s" % [level, day, "校園・教室" if at_school else "上學路與生活任務"], 19, CREAM)
 	banner.position = Vector2(30, 82)
 	banner.size = Vector2(380, 42)
 	explorer_root.add_child(banner)
@@ -173,6 +188,13 @@ func _show_exploration() -> void:
 	touch_pad.add_child(_create_touch_button("▶", "right"))
 	explorer_root.add_child(touch_pad)
 	_update_badge()
+
+func _location_name() -> String:
+	if day == 1: return "早餐店"
+	if day == 8: return "橡皮擦任務"
+	if day == 9: return "班級花園"
+	if day == 10: return "早餐店與玩具目標"
+	return "今日任務"
 
 func _resume_exploration() -> void:
 	_show_exploration()
@@ -271,7 +293,7 @@ func _make_ui() -> void:
 	explorer_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	explorer_root.mouse_filter = Control.MOUSE_FILTER_PASS
 	root.add_child(explorer_root)
-	var title := _label("小小夢魔  ｜  月光玩具盒", 25, GOLD)
+	var title := _label("小小夢魔  ｜  星夜上學路", 25, GOLD)
 	title.position = Vector2(34, 22)
 	title.size = Vector2(520, 42)
 	root.add_child(title)
@@ -390,138 +412,160 @@ func _row() -> HBoxContainer:
 func _show_welcome() -> void:
 	view = "welcome"
 	_clear()
-	_heading("星夜校園・理財小任務", "替願望留一把鑰匙", "在月光雜貨店練習分配小小預算，再到星苗花園認識分散風險。每關一把鑰匙，做完看看自己學會了什麼。")
-	content.add_child(_label("沒有真實金錢，也沒有投資商品；可以慢慢試，答錯也能再來。", 15, Color("#f4d99c")))
+	room_background.texture = load(MORNING_ROUTE_PATH)
+	room_background.visible = true
+	_heading("星夜校園・十天存錢挑戰", "從家裡走到學校", "連續十天安排零用錢與快樂值，朝玩具存錢目標前進。每天先走到場景任務點，再選擇並確認方案。")
+	content.add_child(_label("早餐店、遺失的橡皮擦、雨天和班級花園都會帶來不同選擇；有些決定隔天才會有結果。", 15, Color("#f4d99c")))
+	content.add_child(_label("選擇難度", 17, CREAM))
 	var row := _row()
-	row.add_child(_button("開始探險", _start_level_one, true))
-	content.add_child(_label("操作：使用方向鍵移動，走近發亮的任務地點後按 E。手機可用畫面上的方向鈕。", 14, MUTED))
+	row.add_child(_button("簡單・目標 260 元", _start_game.bind("easy"), true))
+	row.add_child(_button("普通・目標 174 元", _start_game.bind("medium")))
+	row.add_child(_button("挑戰・目標 60 元", _start_game.bind("hard")))
+	content.add_child(_label("方向鍵／WASD 移動，到發亮任務牌附近按 E 或點擊。手機可用畫面上的方向鈕。遊戲幣與星種都是虛構的。", 14, MUTED))
 
-func _start_level_one() -> void:
+func _start_game(mode: String) -> void:
+	difficulty = mode
+	var settings := {"easy":{"money":80,"joy":18,"goal":260,"allowances":[24,25,24,25,24,10,10,25,24,25]},"medium":{"money":40,"joy":12,"goal":174,"allowances":[18,18,18,18,18,8,8,18,18,18]},"hard":{"money":20,"joy":6,"goal":60,"allowances":[22,22,22,22,22,10,10,22,22,22]}}
+	var config: Dictionary = settings[mode]
+	savings = config.money
+	happiness = config.joy
+	toy_goal = config.goal
+	allowances = config.allowances
+	day = 1
 	level = 1
-	counts = [0, 0, 0]
-	_show_game()
+	keys = 0
+	scores = [0,0]
+	phase_points = 0
+	history.clear()
+	daily_log.clear()
+	pending_events.clear()
+	game_over = false
+	_begin_day()
 
-func _start_level_two() -> void:
-	level = 2
-	counts = [0, 0, 0]
-	_show_game()
+var allowances: Array = [24,25,24,25,24,10,10,25,24,25]
 
-func _show_game(message := "") -> void:
-	if view == "game":
-		if level == 1: _show_shop(message)
-		else: _show_gardens(message)
-	else:
-		_show_exploration()
+func _scenario() -> Dictionary:
+	var titles := ["早餐店・選擇早餐", "文具店・鉛筆快用完", "上學路・突然下雨", "午餐時間・同學邀買點心", "教室・橡皮擦不見了！", "週末・幫家人跑差事", "玩具店・存錢目標還差多少", "教室・還是找不到橡皮擦", "班級花園・星種放在哪裡", "最後一天・早餐與玩具目標"]
+	var bodies := ["從家裡出發，早餐店就在路上。", "上課需要寫字。", "今天可以準備雨具，或把錢留下。", "午餐已準備好，選擇一份點心。", "作業快開始了，今天有 %d 元。先比較需要與價格。" % daily_allowance, "週末不用買早餐。", "玩具目標 %d 元，目前存款 %d 元。" % [toy_goal,savings], "先找失物箱，再想想是否購買。", "用虛構星種做分散風險的小實驗。", "看看最後存款是否達到 %d 元。" % toy_goal]
+	var options := [
+		[["豆漿和小饅頭",8,0,16,"簡單早餐滿足需要，今天能存下更多。"],["飯糰和豆漿",14,1,18,"有飽足感，也留下一些錢。"],["再加買甜點",28,2,8,"今天很開心，但甜點讓可存的錢變少。"]],
+		[["普通鉛筆",8,0,18,"鉛筆解決寫字需要，價格也在預算內。"],["喜歡的多色筆",16,1,13,"多色筆較有趣，也比普通鉛筆多花一些。"],["先借同學的",0,0,14,"借用能暫時省錢，記得下課歸還。"]],
+		[["買耐用雨衣",15,0,17,"雨衣先花一些錢，能減少淋雨機會。"],["買便宜雨傘",8,0,15,"便宜雨傘能遮雨，但大風時可能損壞。"],["淋雨跑去學校",0,-1,8,"省下雨具錢，但淋雨讓心情不太好。"]],
+		[["帶水壺，只買水果",6,1,18,"水果是點心，也避免重複買飲料。"],["和同學分享小點心",12,2,16,"分享讓人開心，記得留在預算內。"],["買最大份套餐",20,2,9,"份量很多，也花掉較多零用錢。"]],
+		[["借同學並下課歸還",0,0,16,"借用暫時解決作業需要，記得歸還。"],["買普通橡皮擦",6,0,18,"普通橡皮擦足以完成作業，價格也實在。"],["買造型橡皮擦組",16,2,10,"造型很可愛，但功能相同而且花得更多。"]],
+		[["先存起來，陪家人散步",0,1,18,"沒有額外花費，也安排免費休閒。"],["買二手故事書",7,2,16,"故事書帶來樂趣，二手選擇也省錢。"],["買遊戲小物和零食",14,2,10,"買之前記得看看存錢目標還差多少。"]],
+		[["記下目標價，今天不買",0,0,18,"記住目標價格，幫助比較存款距離。"],["買小貼紙當獎勵",5,1,15,"小獎勵也能列進預算。"],["先買昂貴玩具",20,2,6,"現在很開心，但離原本目標更遠了。"]],
+		[["找失物箱，再借同學",0,0,18,"先找找看，需要時借用，不急著花錢。"],["買普通橡皮擦",6,0,16,"普通橡皮擦能完成作業，價格較低。"],["買造型橡皮擦組",16,2,10,"造型組吸引人，但完成作業不需要多買。"]],
+		[["平均放進三座花園",2,1,18,"分散能降低單一地點的影響，但不能保證不損失。"],["全放月亮花園",0,0,10,"集中很簡單，但單一地點出問題會影響全部。"],["全放雲朵花園",0,0,6,"全部集中一處，遇到變化就沒有其他花園分擔。"]],
+		[["簡單早餐，把錢留給目標",6,0,18,"先安排早餐需要，再把錢留給目標。"],["喜歡的早餐和水果",17,2,14,"早餐水果讓人開心，也要看看存款能否達標。"],["大份早餐加甜點",25,2,8,"今天吃得豐盛，但目標可能還差一段距離。"]]
+	]
+	var allowance_note := "今天有 %d 元零用錢。" % daily_allowance
+	if day == 6: allowance_note = "今天是週末，不用買早餐；零用錢 %d 元。" % daily_allowance
+	return {"title":titles[day-1],"body":bodies[day-1] + " " + allowance_note,"choices":options[day-1]}
 
-func _counter_row(index: int, title_text: String, detail: String) -> void:
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 8)
-	content.add_child(row)
-	var info := VBoxContainer.new()
-	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	info.add_child(_label(title_text, 17, CREAM))
-	info.add_child(_label(detail, 13, MUTED))
-	row.add_child(info)
-	var minus := _button("−", func(): _change_count(index, -1), false)
-	minus.custom_minimum_size = Vector2(54, 48)
-	row.add_child(minus)
-	var count_label := _label(str(counts[index]), 20, GOLD)
-	count_label.custom_minimum_size = Vector2(34, 48)
-	count_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	count_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	row.add_child(count_label)
-	var plus := _button("＋", func(): _change_count(index, 1), false)
-	plus.custom_minimum_size = Vector2(54, 48)
-	row.add_child(plus)
+func _begin_day() -> void:
+	daily_allowance = int(allowances[day-1])
+	if not pending_events.is_empty():
+		var event: Dictionary = pending_events.pop_front()
+		savings = max(0,savings-int(event.cost))
+		daily_log.append("延遲結果：" + event.text)
+	_show_exploration()
 
-func _change_count(index: int, amount: int) -> void:
-	var cap := 10 if level == 1 else 6
-	var total: int = counts[0] + counts[1] + counts[2]
-	if amount > 0 and total >= cap:
-		return
-	counts[index] = max(0, int(counts[index]) + amount)
-	_show_game()
-
-func _show_shop(message: String = "") -> void:
-	view = "game"
+func _show_day_mission() -> void:
+	view = "mission"
 	_clear()
-	_heading("第一關・月光雜貨店　｜　每關最高 90 分", "10 枚月光幣，怎麼安排？", "先照顧需要，也替一個重要願望存一點；剩下的再選喜歡的小物。把 10 枚都分完就能送出。")
-	_counter_row(0, "生活需要・雨衣", "下雨時能保護自己；雨衣需要 4 枚")
-	_counter_row(1, "存錢目標・星象望遠鏡", "願望可以慢慢存；投入 1 枚就開始")
-	_counter_row(2, "想要的小物・星星貼紙", "喜歡的東西也可以留一點預算")
-	content.add_child(_label("已分配 %d / 10 枚　　需要 %d　・　存錢 %d　・　想要 %d" % [counts[0]+counts[1]+counts[2], counts[0], counts[1], counts[2]], 15, Color("#f4d99c")))
-	if message != "": content.add_child(_label(message, 14, Color("#a8dfbd")))
-	var row := _row()
-	row.add_child(_button("送出分配", _submit_shop, true))
-	row.add_child(_button("重新分配", func(): counts = [0,0,0]; _show_game()))
+	var data := _scenario()
+	_heading("第 %d 天・%s" % [day,data.title], "%s\n存款 %d 元／快樂值 %d / 20" % [data.body,savings,happiness], "選擇方案先預覽結果，再按確認套用。難度：%s" % {"easy":"簡單","medium":"普通","hard":"挑戰"}[difficulty])
+	if not daily_log.is_empty(): content.add_child(_label(daily_log[-1],14,Color("#64805f")))
+	for i in range(data.choices.size()):
+		var option: Array = data.choices[i]
+		content.add_child(_button("%s　花費 %d 元" % [option[0],option[1]],_preview_choice.bind(i),selected_choice==i))
+	if selected_choice >= 0:
+		var chosen: Array = data.choices[selected_choice]
+		var new_joy := int(chosen[2])
+		if happiness > 15 and new_joy > 0: new_joy = int(ceil(new_joy/2.0))
+		if happiness <= 5 and new_joy < 0: new_joy = int(floor(new_joy*1.5))
+		if (day == 1 or day == 10) and happiness <= 5 and new_joy <= 0: new_joy -= 1
+		content.add_child(_label("確認預覽：存款 %d 元；快樂值變化 %s%d。%s" % [savings+daily_allowance-int(chosen[1]),"+" if new_joy>0 else "",new_joy,chosen[4]],15,Color("#f4d99c")))
+		var row := _row()
+		row.add_child(_button("確認今天的選擇",_confirm_choice,true))
+		row.add_child(_button("返回場景",_resume_exploration))
 
-func _submit_shop() -> void:
-	if counts[0] + counts[1] + counts[2] != 10:
-		_show_game("再分完剩下的月光幣，就能檢查看看！")
-		return
-	if counts[0] < 4 or counts[1] < 1:
-		_show_game("小提醒：雨衣需要 4 枚，存錢目標至少放 1 枚。你可以重新安排。")
-		return
-	scores[0] = 30 + (30 if counts[0] >= 4 else 0) + (30 if counts[1] >= 2 else 0)
-	keys = max(keys, 1)
-	_update_badge()
-	_show_reward("第一把鑰匙到手！", "你先照顧了需要，也讓存錢目標開始前進。選擇貼紙的數量由你決定。", scores[0], false)
+func _preview_choice(index: int) -> void:
+	selected_choice = index
+	_show_day_mission()
 
-func _show_gardens(message: String = "") -> void:
-	view = "game"
-	_clear()
-	_heading("第二關・星苗花園　｜　每關最高 90 分", "6 顆星種，放進哪幾座花園？", "雲朵花園遇到夜風會少 1 顆。把種子放在不同花園，能減少集中在一處的風險；分散也不代表一定不會損失。")
-	_counter_row(0, "月亮花園", "安穩的月光苗圃")
-	_counter_row(1, "雲朵花園", "今晚的夜風會吹走 1 顆")
-	_counter_row(2, "玻璃花園", "明亮、需要細心照看")
-	content.add_child(_label("已放置 %d / 6 顆　　月亮 %d　・　雲朵 %d　・　玻璃 %d" % [counts[0]+counts[1]+counts[2], counts[0], counts[1], counts[2]], 15, Color("#f4d99c")))
-	if message != "": content.add_child(_label(message, 14, Color("#a8dfbd")))
-	var row := _row()
-	row.add_child(_button("送出星種", _submit_gardens, true))
-	row.add_child(_button("重新安排", func(): counts = [0,0,0]; _show_game()))
-
-func _submit_gardens() -> void:
-	if counts[0] + counts[1] + counts[2] != 6:
-		_show_game("再放置剩下的星種，就能觀察夜風的結果。")
+func _confirm_choice() -> void:
+	var choice: Array = _scenario().choices[selected_choice]
+	var new_money := savings + daily_allowance - int(choice[1])
+	if new_money < 0:
+		last_feedback = "錢不夠支付，請挑選預算內的方案。"
+		selected_choice = -1
+		_show_day_mission()
 		return
-	var occupied := 0
-	for n in counts:
-		if n > 0: occupied += 1
-	if occupied < 2:
-		_show_game("想想看：如果只放在一座花園，遇到變化時會如何？試著分到至少兩座。")
+	savings = new_money
+	var joy_change := int(choice[2])
+	if happiness > 15 and joy_change > 0: joy_change = int(ceil(joy_change/2.0))
+	if happiness <= 5 and joy_change < 0: joy_change = int(floor(joy_change*1.5))
+	if (day == 1 or day == 10) and happiness <= 5 and joy_change <= 0: joy_change -= 1
+	happiness = clampi(happiness+joy_change,0,20)
+	phase_points += int(choice[3])
+	var note := "第 %d 天：%s 存款 %d 元，快樂值 %d。" % [day,choice[4],savings,happiness]
+	daily_log.append(note)
+	history.append({"day":day,"score":choice[3],"money":savings,"happiness":happiness,"choice":choice[0]})
+	if day == 3 and selected_choice == 1: pending_events.append({"cost":5,"text":"大風弄壞雨傘，修補花了 5 元。"})
+	if day == 3 and selected_choice == 2: pending_events.append({"cost":3,"text":"衣服淋濕，洗曬多花 3 元。"})
+	if day == 9: pending_events.append({"cost":0,"text":"夜風吹過花園；分散星種降低集中風險，但仍可能有變化。"})
+	selected_choice = -1
+	if happiness <= 0:
+		game_over = true
+		scores[0 if day<=5 else 1] = phase_points
+		_show_summary(false,"快樂值用完，挑戰提早結束。下次試著平衡花費與休息。")
 		return
-	var wind_loss := 1 if counts[1] > 0 else 0
-	scores[1] = 30 + 30 + (30 if occupied == 3 else 0)
-	keys = 2
-	_update_badge()
-	_show_reward("第二把鑰匙找到啦！", "夜風帶走了雲朵花園的 %d 顆。把星種分到 %d 座花園，降低了只押一處的集中風險；分散仍不能保證不損失。" % [wind_loss, occupied], scores[1], true)
+	if day == 5 or day == 10:
+		var phase := 0 if day == 5 else 1
+		scores[phase] = phase_points
+		level = phase + 1
+		if day == 5: keys = 1
+		elif savings >= toy_goal: keys = 2
+		_update_badge()
+		var result := "完成前五天，取得第一把鑰匙。" if day == 5 else ("存款達標，取得第二把鑰匙！" if savings>=toy_goal else "存款還差 %d 元才達到玩具目標。" % (toy_goal-savings))
+		_show_reward("第 %d 關結算" % (phase+1),result,scores[phase],day==10)
+		return
+	day += 1
+	_begin_day()
 
 func _show_reward(title_text: String, explanation: String, earned: int, final := false) -> void:
 	view = "reward"
 	_clear()
-	if is_instance_valid(room_background): room_background.visible = false
-	if is_instance_valid(key_model): key_model.visible = true
-	_heading("月光鑰匙・關卡完成", title_text, explanation)
-	content.add_child(_label("本關得分　%d / 90" % earned, 23, GOLD))
-	content.add_child(_label("目前累積　%d / 180　　鑰匙　%d / 2" % [scores[0]+scores[1], keys], 16, CREAM))
+	room_background.visible = false
+	if is_instance_valid(key_model): key_model.visible = day == 5 or (day == 10 and savings >= toy_goal)
+	_heading("月光鑰匙・關卡完成",title_text,explanation)
+	content.add_child(_label("本關得分 %d / 90" % earned,23,GOLD))
+	content.add_child(_label("存款 %d / %d 元　快樂值 %d / 20　鑰匙 %d / 2" % [savings,toy_goal,happiness,keys],16,CREAM))
 	var row := _row()
-	if final:
-		row.add_child(_button("看看我的進步", _show_summary, true))
-	else:
-		row.add_child(_button("走向星苗花園", _start_level_two, true))
-		row.add_child(_button("再玩第一關", _start_level_one))
+	if final: row.add_child(_button("看看我的進步",_show_summary.bind(savings>=toy_goal)))
+	else: row.add_child(_button("繼續下一天",_continue_challenge,true))
 
-func _show_summary() -> void:
+func _continue_challenge() -> void:
+	if day == 5:
+		day = 6
+		level = 2
+		phase_points = 0
+	_begin_day()
+
+func _show_summary(won: bool = true, note: String = "") -> void:
 	view = "summary"
 	_clear()
-	_heading("探險完成・我的學習成果", "兩把月光鑰匙都收集完成", "你的分數反映這次任務中的選擇，不代表能力高低。每一次重新安排，都是一次練習。")
-	content.add_child(_label("月光雜貨店　%d / 90　　星苗花園　%d / 90" % [scores[0], scores[1]], 19, GOLD))
-	content.add_child(_label("總分　%d / 180" % (scores[0] + scores[1]), 25, CREAM))
-	content.add_child(_label("我學會：先分清需要與想要，並替目標預留存款。", 16, MUTED))
-	content.add_child(_label("我也學會：把資源分散可降低集中風險，但結果仍不確定。", 16, MUTED))
-	content.add_child(_label("這次得分只記在目前遊戲頁面；沒有收集個人資料。", 14, Color("#9cd9ce")))
+	_heading("探險完成・我的學習成果","十天存錢挑戰回顧","分數用來回顧練習，不代表能力高低。")
+	content.add_child(_label("第一關・家到學校（第 1–5 天）　%d / 90 分" % scores[0],19,GOLD))
+	content.add_child(_label("第二關・校園與存錢目標（第 6–10 天）　%d / 90 分" % scores[1],19,GOLD))
+	content.add_child(_label("總分 %d / 180　存款 %d / %d 元" % [scores[0]+scores[1],savings,toy_goal],23,CREAM))
+	content.add_child(_label("快樂值 %d / 20　月光鑰匙 %d / 2" % [happiness,keys],17,CREAM))
+	content.add_child(_label("學到：分辨需要和想要、設定存錢目標、留意延遲花費；分散投資能降低集中風險，但不能保證不損失。",16,MUTED))
+	content.add_child(_label(note if note!="" else ("太棒了，存款達到玩具目標！" if won else "再試一次，調整每天的花費安排。"),15,Color("#9cd9ce")))
 	var row := _row()
-	row.add_child(_button("重新探險", func(): scores = [0,0]; keys = 0; _show_welcome(), true))
+	row.add_child(_button("重新挑戰",_show_welcome,true))
 	_update_badge()
 
 func _layout_ui() -> void:

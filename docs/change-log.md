@@ -1,5 +1,16 @@
 # Change log
 
+## v0.9 — 2026-11-25 — interactive everyday scenarios
+
+- Replaced the abstract shop allocation screen with an original walk from home toward school and a clickable breakfast-shop task sign.
+- Let the player plan a 50-dollar allowance across breakfast, a savings goal, and money carried to school. Plans that miss the savings goal give feedback and can be revised before awarding the first key.
+- Added a distinct classroom scene and nearby lost-eraser mission, with borrowing/basic/decorated purchase plans and the remaining balance carried from the breakfast decision.
+- Kept the original fictional six-seed garden event in the school mission. All seeds must be placed, and at least two gardens must be used to earn the second key; feedback describes the fixed wind outcome and risk limits.
+- Added original warm-pixel SVG backgrounds for the route and classroom; retained the Blender dream key and existing visual direction.
+- Added mission-sign click-to-interact while preserving near-marker distance checks, keyboard movement, E/Enter, and the touch direction pad.
+- Updated the requirements baseline from v0.6 to v0.7 and recorded the owner-directed change in D-009.
+- Godot 4.7.2 project import, headless scene launch, and Web release export passed locally. Public gameplay verification is pending deployment.
+
 ## v0.8 — 2026-11-24
 
 - Published build `index-6154d144e2a0.pck` to GitHub Pages and refreshed the page with a cache-busting URL for acceptance review.
@@ -53,3 +64,10 @@
 ## v0.1 — 2026-11-24
 
 - Initial two-level financial literacy game scope: elementary audience, key rewards, level scores, progress summary, and static web hosting.
+
+## v0.10 — Implement ten-day saving challenge redesign (2026-11-25)
+
+- Replaced the prior two-task budget counter with the linked ten-day saving-challenge loop and three difficulty presets.
+- Added per-day in-scene movement/trigger, preview-and-confirm choices, savings and happiness tracking, delayed outcomes, breakfast and missing-eraser scenarios, and a fictional garden-risk lesson.
+- Split days into two five-day chapters with separate scores. Key two now requires the selected day-ten savings goal.
+- Updated requirements to v0.8, brief, traceability, project state, and skills audit; local Godot import and headless run passed. Fresh Web export and public acceptance remain pending.

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#243043"/><stop offset=".66" stop-color="#566278"/><stop offset="1" stop-color="#b99a77"/></linearGradient>
+    <linearGradient id="road" x2="0" y2="1"><stop stop-color="#9b8164"/><stop offset="1" stop-color="#55493e"/></linearGradient>
+    <pattern id="bricks" width="48" height="30" patternUnits="userSpaceOnUse"><path d="M0 0H48M0 15H48M24 0V15M0 15V30M48 15V30" stroke="#674d42" stroke-width="3" opacity=".5"/></pattern>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1320" cy="145" r="74" fill="#f4dca6" opacity=".9"/><circle cx="1320" cy="145" r="96" fill="#f4dca6" opacity=".1"/>
+  <g fill="#e9dfc8" opacity=".7"><rect x="170" y="124" width="12" height="12"/><rect x="480" y="86" width="10" height="10"/><rect x="891" y="149" width="13" height="13"/><rect x="1114" y="73" width="9" height="9"/></g>
+  <path d="M0 532H1600V720H0Z" fill="#697159"/><path d="M0 566H1600V714H0Z" fill="#77765d"/>
+  <g fill="#435147"><circle cx="104" cy="566" r="73"/><circle cx="198" cy="572" r="56"/><circle cx="741" cy="567" r="72"/><circle cx="841" cy="564" r="55"/><circle cx="1210" cy="567" r="65"/></g>
+  <!-- Home -->
+  <g>
+    <rect x="55" y="325" width="312" height="258" fill="#b07d58" stroke="#503d39" stroke-width="12"/>
+    <rect x="55" y="325" width="312" height="258" fill="url(#bricks)"/>
+    <path d="M31 340L207 218L391 340Z" fill="#594541" stroke="#403438" stroke-width="12"/>
+    <rect x="111" y="396" width="90" height="83" fill="#f0d59b" stroke="#5c493e" stroke-width="11"/><path d="M156 397V479M111 438H201" stroke="#746253" stroke-width="8"/>
+    <rect x="255" y="412" width="69" height="171" fill="#65483a" stroke="#503d39" stroke-width="10"/><circle cx="304" cy="500" r="6" fill="#e4be75"/>
+    <rect x="85" y="285" width="113" height="38" fill="#6d5144"/><text x="105" y="312" fill="#fff0c4" font-family="sans-serif" font-size="24" font-weight="700">小小的家</text>
+  </g>
+  <!-- Breakfast shop -->
+  <g>
+    <rect x="603" y="349" width="265" height="211" fill="#d39b5f" stroke="#584239" stroke-width="12"/>
+    <rect x="621" y="390" width="229" height="113" fill="#f3dfb3" stroke="#725040" stroke-width="9"/>
+    <path d="M581 384H887L857 319H611Z" fill="#a5534a" stroke="#503a3a" stroke-width="12"/>
+    <path d="M610 321H859" stroke="#f6d99a" stroke-width="22" stroke-dasharray="42 14"/>
+    <rect x="641" y="423" width="94" height="62" rx="24" fill="#f0d28c" stroke="#a67b54" stroke-width="8"/><path d="M760 468Q793 418 824 468" fill="#c77c4c" stroke="#88583f" stroke-width="8"/>
+    <rect x="572" y="284" width="330" height="49" fill="#543e38"/><text x="605" y="318" fill="#fff0c4" font-family="sans-serif" font-size="27" font-weight="700">晨光早餐店</text>
+    <rect x="693" y="523" width="77" height="37" fill="#68493b"/><rect x="710" y="532" width="43" height="15" fill="#f3d59b"/>
+  </g>
+  <!-- School -->
+  <g>
+    <rect x="1063" y="294" width="442" height="288" fill="#ad7356" stroke="#4e3d3c" stroke-width="12"/>
+    <path d="M1033 312L1282 200L1535 312Z" fill="#5b4c4a" stroke="#423a3c" stroke-width="12"/>
+    <rect x="1097" y="355" width="83" height="90" fill="#e9d5a8" stroke="#654d44" stroke-width="9"/><path d="M1138 355V445M1097 400H1180" stroke="#8b6b57" stroke-width="7"/>
+    <rect x="1210" y="355" width="83" height="90" fill="#e9d5a8" stroke="#654d44" stroke-width="9"/><path d="M1251 355V445M1210 400H1293" stroke="#8b6b57" stroke-width="7"/>
+    <rect x="1324" y="355" width="83" height="90" fill="#e9d5a8" stroke="#654d44" stroke-width="9"/><path d="M1365 355V445M1324 400H1407" stroke="#8b6b57" stroke-width="7"/>
+    <rect x="1218" y="476" width="126" height="106" fill="#5e453a" stroke="#463937" stroke-width="10"/><circle cx="1324" cy="531" r="7" fill="#e9c880"/>
+    <rect x="1171" y="249" width="227" height="41" fill="#6b513f"/><text x="1221" y="278" fill="#fff0c4" font-family="sans-serif" font-size="26" font-weight="700">星星學校</text>
+  </g>
+  <!-- Path -->
+  <path d="M0 700Q300 655 600 701T1200 701T1600 690V900H0Z" fill="url(#road)"/>
+  <path d="M0 718Q300 675 600 718T1200 718T1600 708" fill="none" stroke="#d4b98b" stroke-width="8" opacity=".7"/>
+  <g fill="#e9d29d" opacity=".65"><path d="M315 800l36-15 8 14-37 14z"/><path d="M452 776l36-15 8 14-37 14z"/><path d="M956 787l36-15 8 14-37 14z"/><path d="M1472 768l36-15 8 14-37 14z"/></g>
+  <rect y="849" width="1600" height="51" fill="#423a38" opacity=".35"/>
+  <text x="76" y="830" fill="#fff0d3" font-family="sans-serif" font-size="29" font-weight="700" opacity=".9">家</text><text x="671" y="830" fill="#fff0d3" font-family="sans-serif" font-size="29" font-weight="700" opacity=".9">早餐店</text><text x="1221" y="830" fill="#fff0d3" font-family="sans-serif" font-size="29" font-weight="700" opacity=".9">學校</text>
+</svg>

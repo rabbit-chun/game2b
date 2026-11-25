@@ -1,24 +1,23 @@
 project_id: game2b-star-night-finance
 mode: guided
-current_phase: sdlc-operate
-requirements_version: 0.6
+current_phase: sdlc-release
+requirements_version: 0.8
 gate_status: approved
 dt_handoff: approved
-sdlc_release: approved
-final_acceptance: approved
+sdlc_release: pending
+final_acceptance: pending
 confirmed:
   - "Audience: elementary school children"
   - "Subject: everyday money management and introductory investing literacy"
-  - "Exactly two levels, each with one primary interaction unit"
-  - "Player walks through each scene with arrow keys and triggers the level task near an in-world mission marker"
-  - "A solved level awards its key; show a score for each level and a final progress summary"
+  - "Exactly two five-day chapters in a ten-day challenge"
+  - "Player walks through scenes with arrow keys and triggers daily tasks near in-world markers"
+  - "The first chapter awards key one; day-ten savings target gates key two; show per-chapter scores and progress"
   - "Use Godot and publish a browser-playable version to rabbit-chun/game2b on GitHub Pages"
   - "Use Blender-produced 3D assets"
   - "Education profile selected: Learning-first; L/E/M/A = 50/15/10/25; G/C penalties = 15/10"
   - "No G or C hard-elimination thresholds; use proposed measurable indicators"
-  - "Gameplay concept B selected: Wish Shop Budget Sort"
-  - "Visual direction selected: Moonlight Toybox; low-poly moonlit diorama with muted teal, warm gold, and glass-like panels"
-  - "Visual direction updated from the owner's attached reference: warm pixel-art dream shop; Blender dream key remains the 3D reward reveal"
+  - "Owner-directed revision: adapt the linked ten-day saving challenge to walkable breakfast, school eraser, delayed-event, and fictional garden scenarios"
+  - "Visual direction: warm pixel-art scenes; retain the Blender dream key as the 3D reward reveal"
 assumptions:
   - "A short, single-player experience is the default"
   - "Scores and keys are session-only; no student identity or analytics are collected"
@@ -39,19 +38,21 @@ artifacts:
   student_worksheet: docs/student-worksheet.md
   instructor_rubric: docs/instructor-rubric.md
 required_tests:
-  - "Godot project imports and runs on the installed Godot version"
-  - "Two levels, key gating, scoring, and final progress recap work end to end"
-  - "Godot Web export serves successfully from the GitHub Pages path"
+  - "Godot project imports and runs on Godot 4.7.2 without script errors"
+  - "All three difficulties initialize their reference savings, happiness, allowance schedule, and goal"
+  - "Player walks to and triggers breakfast, previews choices, and confirms a plan"
+  - "Day-five completion awards key one and score; the school eraser task offers borrow and purchase options"
+  - "Day-ten result awards key two only when savings meet the selected goal"
+  - "Final screen shows both chapter scores, resources, keys, goal result, and learning progress"
+  - "New Godot Web export loads from the GitHub Pages path with all assets"
 passed_tests:
-  - "Godot 4.7.2 parses and compiles the arrow-key exploration and mission interaction code; Web release export completes and outputs index.html, index.js, index.wasm, content-hashed index-6154d144e2a0.pck (8,926,708 bytes), and audio worklets"
-  - "Public GitHub Pages browser walkthrough after v0.4 completed both levels, unlocked keys, and displayed the final learning-summary screen"
-  - "Latest public GitHub Pages build: on-screen direction pad moved the explorer across the room into each mission marker; pressing E opened both mission challenges"
-  - "Latest public walkthrough completed both finance interactions: keys reached 2/2, level scores showed 60/90 each for the tested allocations, and final summary showed 120/180 and both learning outcomes"
-  - "GitHub Pages serves the HTML entry, JavaScript, WebAssembly, PCK, and audio worklet with HTTP 200"
+  - "Godot 4.7.2 imported the project and loaded the revised GDScript without parse errors"
+  - "Godot 4.7.2 headless startup completed with exit code 0"
+  - "Fresh Godot Web export and public acceptance walkthrough are pending"
 known_limitations:
-  - "Mobile touch hardware itself was not available for a separate device check; the same on-screen direction controls were exercised with desktop pointer clicks"
   - "The exported WebAssembly and bundled CJK font make the first download relatively large"
   - "The educational game has not yet been playtested with children or reviewed by a financial-literacy educator"
   - "Tournament ratings are AI pre-scores with low confidence, not user research"
-  - "The local Blender toolkit configuration/add-on is absent; Blender 5.3 itself is available"
-  - "Blender command-line validation of assets/dream_key.blend could not complete in this environment (process exited with Windows status -1073741790); in-game GLB rendering was verified in the browser"
+  - "The Blender Toolkit add-on/config is absent; Blender 5.3 itself is installed, but its command-line help exited 1 without output. Existing Blender-made dream-key GLB remains integrated."
+  - "The Godot editor emitted safe-save warnings because Windows app settings are restricted; headless project load, scene startup, and release export still returned exit code 0."
+  - "The educational game has not been playtested with children or reviewed by a financial-literacy educator; tournament values are AI pre-scores."

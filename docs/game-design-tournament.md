@@ -1,5 +1,7 @@
 # AI Game Design Tournament — Decision Report
 
+> **Scope update D-009 (2026-11-25):** The project owner explicitly replaced the abstract allocation menus with an interactive home-to-school breakfast scenario and a school lost-eraser scenario. This owner-directed interaction request supersedes the older B selection below. Existing design constraints remain: Learning-first profile, two keys, visible per-level scores, progress recap, child-safe fictional investing, and the approved warm pixel style. D-009 adapts the earlier exploration candidate A with the selected budget and fixed-risk mechanics; this note is the change record, not new player-evidence or a claim of child playtesting.
+
 **Version/date:** 0.2 / 2026-11-24  
 **Decision status:** Awaiting owner selection; no Godot gameplay code or visual mockups created for this design yet.
 
@@ -115,3 +117,5 @@ These normalized values are structured AI pre-scores, not observed outcomes. Non
 - Selected concept: B — Wish Shop Budget Sort
 - Conditions/rationale: preserve the two distinct allocation interactions, visible consequences, recoverable errors, and fictional non-guaranteed outcomes.
 - User approval date: 2026-11-24
+
+> **Current scope D-010 (2026-11-25):** This tournament is historical evidence for the earlier concept selection. It does not describe the current playable loop. The owner has since requested the linked ten-day saving challenge with three difficulty/resource presets, daily preview-confirm choices and delayed events, adapted to walkable breakfast, eraser, and fictional garden situations. The current approved requirements are in `docs/requirements.md` v0.8; this owner-directed update supersedes the old one-screen budget/seed loop and associated acceptance rules.

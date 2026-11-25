@@ -1,27 +1,21 @@
-# Visual direction update — D-008
+# Visual review — warm pixel-art school journey
 
-**Status:** Owner-directed visual implementation; owner acceptance recorded 2026-11-24.
+**Status:** D-008 visual reference retained; new journey and ten-day gameplay review in progress.
 
-**Reference:** Pixel-art room image supplied by the project owner on 2026-11-24.
+## Visual language
 
-## Implemented visual language
+- Warm wood-and-brick route with breakfast shop details, cream panels, garden colors, crisp SVG edges, and large buttons.
+- Classroom scene supports the lost-eraser and fictional garden missions.
+- The existing Blender-made 3D dream key appears on chapter results.
+- Traditional Chinese labels accompany colors; controls support pointer/touch and keyboard focus.
 
-- Warm wood-brick interior, cream transom windows, green trim, colorful shelves, checkout counter, seating rug, water cooler, potted plant, and sofa.
-- Crisp SVG edges and simple color blocks to match the reference's pixel-art treatment.
-- Parchment content panel with square wood-colored frame; square garden-green and terracotta buttons.
-- A readable, compact HUD shows key count and score at the top right.
-- Existing Blender-made 3D dream key appears at a readable scale in the unobstructed reward area.
+## Revised interaction review
 
-## Interaction and readability criteria
+D-010 changed the primary loop to daily choices over two five-day chapters. Scene marker movement and trigger, choice preview/confirmation, resources, per-chapter scores, conditional second key, and final progress recap require public browser acceptance against the new build. Older public screenshots and walkthroughs refer to superseded builds and do not count as evidence for this revision.
 
-- The same two approved money interactions remain primary: allocate 10 coins, then spread 6 fictional seeds.
-- Scores, key count, progress feedback, and the final learning summary remain visible in the UI.
-- Color is accompanied by Traditional Chinese labels; buttons remain large Godot controls for pointer, touch, and keyboard focus.
-- Keep financial results deterministic and explain that diversification does not guarantee against loss.
+## Open visual checks
 
-## Review status — 2026-11-24
-
-- Godot 4.7.2 Web export refreshed successfully; the latest content-hashed package is `index-31e038d0ee42.pck`.
-- Public GitHub Pages browser review confirmed the shop screen, both game interactions, reward/key screens, and final learning summary render.
-- v0.7 desktop/public review verified arrow-key movement, direction-pad movement, E-triggered nearby mission screens for both levels, key rewards, level scores, and the final progress recap.
-- A separate physical mobile-device touch and wide desktop layout review remains useful; the current public walk-through used desktop Chrome.
+- Readability at the desktop and narrow mobile viewport sizes.
+- Public browser play through day one and the missing-eraser task.
+- Both chapter results, goal met/not met endings, and 3D key display.
+- Physical mobile touch behavior; not yet checked.

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="wall" x2="0" y2="1"><stop stop-color="#76745f"/><stop offset=".75" stop-color="#b69b76"/><stop offset="1" stop-color="#806b5a"/></linearGradient>
+    <pattern id="floor" width="96" height="52" patternUnits="userSpaceOnUse"><path d="M0 0H96M0 0V52M48 0V52" stroke="#453a38" stroke-width="4" opacity=".35"/></pattern>
+  </defs>
+  <rect width="1600" height="900" fill="url(#wall)"/>
+  <rect x="0" y="0" width="1600" height="170" fill="#d2c6a7"/>
+  <g fill="#778071"><rect x="56" y="45" width="250" height="19"/><rect x="398" y="45" width="250" height="19"/><rect x="741" y="45" width="250" height="19"/><rect x="1084" y="45" width="250" height="19"/></g>
+  <g fill="#fff0c3" stroke="#6d5d51" stroke-width="10"><rect x="76" y="84" width="214" height="112"/><rect x="428" y="84" width="214" height="112"/><rect x="780" y="84" width="214" height="112"/><rect x="1132" y="84" width="214" height="112"/></g>
+  <g stroke="#8c775e" stroke-width="8"><path d="M183 84V196M76 140H290M535 84V196M428 140H642M887 84V196M780 140H994M1239 84V196M1132 140H1346"/></g>
+  <rect x="320" y="253" width="690" height="240" fill="#55715d" stroke="#4e4039" stroke-width="17"/>
+  <text x="387" y="332" fill="#e7ddb8" font-family="sans-serif" font-size="42" font-weight="700">今天的任務：想一想再選擇</text>
+  <g fill="#f3d59b"><circle cx="414" cy="385" r="11"/><circle cx="474" cy="385" r="11"/><circle cx="534" cy="385" r="11"/></g>
+  <path d="M0 600H1600V900H0Z" fill="#8e735c"/><path d="M0 600H1600V900H0Z" fill="url(#floor)"/>
+  <!-- Desks -->
+  <g stroke="#513c37" stroke-width="12">
+    <path d="M165 592H516L490 630H191Z" fill="#bb8253"/><path d="M210 629V758M474 629V758" fill="none"/>
+    <path d="M629 572H1000L973 613H657Z" fill="#c7915c"/><path d="M678 612V742M949 612V742" fill="none"/>
+    <path d="M1110 598H1457L1430 638H1136Z" fill="#af784f"/><path d="M1151 637V770M1400 637V770" fill="none"/>
+  </g>
+  <!-- Eraser and pencil on the mission desk -->
+  <g transform="translate(774 530) rotate(-8)"><rect x="0" y="0" width="112" height="34" rx="8" fill="#e1a8a2" stroke="#684945" stroke-width="7"/><rect x="0" y="0" width="38" height="34" rx="8" fill="#f2d6cb"/><path d="M38 4V30" stroke="#a06a64" stroke-width="5"/></g>
+  <g transform="translate(901 522) rotate(15)"><rect x="0" y="0" width="22" height="75" fill="#d5ad63" stroke="#72513e" stroke-width="6"/><path d="M0 74L11 94L22 74" fill="#493d38"/></g>
+  <!-- Seed tray -->
+  <g><rect x="1237" y="504" width="165" height="46" fill="#705341" stroke="#473b36" stroke-width="8"/><circle cx="1271" cy="518" r="10" fill="#d7b56c"/><circle cx="1310" cy="526" r="10" fill="#d7b56c"/><circle cx="1351" cy="517" r="10" fill="#d7b56c"/><path d="M1271 541v23m39-15v15m41-23v23" stroke="#5d7c55" stroke-width="8"/></g>
+  <!-- chairs -->
+  <g fill="#526957" stroke="#493d38" stroke-width="10"><rect x="203" y="662" width="149" height="90"/><rect x="700" y="646" width="149" height="90"/><rect x="1164" y="673" width="149" height="90"/></g>
+  <rect y="832" width="1600" height="68" fill="#423a38" opacity=".3"/>
+</svg>
