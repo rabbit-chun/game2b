@@ -1,4 +1,4 @@
-# Requirements baseline v0.8 — ten-day saving challenge
+# Requirements baseline v0.9 — visible Blender player model
 
 ## Functional requirements
 
@@ -12,7 +12,7 @@
 | FR-06 | Display score for each chapter and final progress. Each daily choice contributes up to 18 points; each five-day chapter is out of 90. | Chapter results and final recap display both scores and /180 total. |
 | FR-07 | Award key one after completing the first five days. Award key two only if day 10 ends with savings at or above the selected toy goal. | An unmet final savings goal shows the amount still needed and does not award key two. |
 | FR-08 | Teach needs/wants, saving toward a goal, delayed spending, and uncertainty/diversification with fictional assets and age-appropriate explanations. | The garden result explicitly says diversification does not guarantee against loss. |
-| FR-09 | Integrate the existing Blender-made key asset as the level reward. | GLB is visible on reward screens. |
+| FR-09 | Integrate Blender-made 3D assets visibly: a controllable player model during exploration and the key model on qualifying chapter rewards. | A GLB player model renders in the Godot 3D viewport texture while walking; the Blender key appears on key-award screens. |
 | FR-10 | Provide a Godot Web build deployable as a static site under `/game2b/`. | Root `index.html` loads all hashed package and companion files from GitHub Pages. |
 | FR-11 | Keep the experience single-player and session-only. | No accounts, personal data, analytics, real-money decisions, or financial recommendations. |
 
@@ -29,7 +29,7 @@
 
 The user-selected Markdown link destination is `https://rabbit-chun.github.io/game1b/` (十天存錢挑戰). Its rules inform three difficulty presets, ten daily allowance values, savings goal, happiness resource, daily choices, immediate feedback, delayed events, early ending at zero happiness, and a day-ten goal check. Scenario text and school journey are original. The game's allowance schedules and goals are reproduced exactly; outcome content is adapted to the requested breakfast and missing-eraser situations.
 
-The two chapters are days 1–5 (home-to-school and daily spending) and days 6–10 (weekend, savings goal, school supplies, and fictional garden risk). Scores are choice-based formative feedback, not evidence of learning efficacy.
+The two chapters are days 1–5 (home-to-school and daily spending) and days 6–10 (weekend, savings goal, school supplies, and fictional garden risk). The player character is a low-poly Blender model rendered through a transparent Godot `SubViewport` and positioned by the existing walk controls; the backgrounds remain warm, original SVG scenes. Scores are choice-based formative feedback, not evidence of learning efficacy.
 
 ## Visual direction
 

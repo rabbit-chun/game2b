@@ -10,8 +10,8 @@
 | FR-06: chapter and final scores | Five choices each contribute up to 18; results show /90 and recap /180 | Acceptance harness checked both chapter scores and final recap | Verified locally |
 | FR-07: solve gates keys | Key one at day-five completion; key two only if savings meet goal on day 10 | Harness completed target success and target miss branches | Verified locally |
 | FR-08: financial learning | Need/want, savings target, delayed cost and fictional garden risk | Scenario copy and recap | Implemented; educator review pending |
-| FR-09: Blender reward model | Existing GLB is revealed on reward screens; source blend retained | `godot/assets/dream_key.glb`, `assets/dream_key.blend` | In game; Blender CLI validation remains unavailable |
-| FR-10: Godot Web static deploy | Godot Web preset, content-hashed PCK, project Pages path | Public browser loaded `index-b3c31c6cc64e.pck` at `/game2b/` | Verified, commit `fb1476c` |
+| FR-09: Blender 3D assets in gameplay and rewards | Blender-made low-poly player renders in a transparent SubViewport and moves with the explorer; Blender key remains the chapter reward | Editable Blender source and GLB; Godot import; local visual preview; full ten-day success/miss harness | Local verification passed; Web/public verification pending |
+| FR-10: Godot Web static deploy | Godot Web preset, content-hashed PCK, project Pages path | Existing public build verified before D-011; new player-model package pending | Reopened for D-011 |
 | FR-11: privacy/scope | No IDs, telemetry or real financial service | Source review | Implemented |
 | NFR-01: Traditional Chinese | Bundled Noto Sans TC and child-oriented copy | Public browser game screen | Verified |
 | NFR-02: keyboard/touch | Keyboard, pointer marker, on-screen touch pad | Public keyboard movement verified; touch device not available | Keyboard verified; physical touch pending |

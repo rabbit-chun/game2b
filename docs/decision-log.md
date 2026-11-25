@@ -78,3 +78,12 @@
 - **Acceptance rule:** Complete days 1–5 to earn key one. Earn key two only if day-ten savings meet the selected toy target. Each chapter displays its score; final recap shows learning progress and goal result.
 - **Impact:** Requirements increment from 0.7 to 0.8. Replaced the earlier 50-dollar one-time breakfast budget and six-seed allocation counters; re-opened implementation, release, and public acceptance checks.
 - **Status:** Implemented locally; fresh Web export and public acceptance pending.
+
+## D-011 — Render the Blender player model during exploration
+
+- **Date:** 2026-11-26
+- **Decision:** Replace the drawn rectangle avatar with an editable, low-poly 3D player modeled in Blender. Render the GLB in a transparent Godot SubViewport, position it with the existing walk controls, and turn it as the player moves horizontally. Keep the warm SVG scenes as the background art and the Blender key as the reward asset.
+- **Owner/evidence:** The owner asked why the game showed no 3D model after earlier directions to use Blender. Inspection found that the SVG TextureRect covered the Godot 3D world and the walking avatar was drawn with rectangles; only the reward key was modeled in 3D.
+- **Acceptance rule:** The player model is visible in the actual exploration scene, moves with arrows/WASD and touch controls, remains distinct against the scene, and renders in the Web build. The reward key remains visible when earned.
+- **Impact:** Requirements increment from 0.8 to 0.9. Adds `assets/dream_explorer.blend`, `godot/assets/dream_explorer.glb`, and its reproducible Blender builder. Reopens visual, movement, Godot import, Web export, and public browser checks.
+- **Status:** Model generated in Blender 5.3; Godot import and desktop preview verified. Web export and public deployment pending.

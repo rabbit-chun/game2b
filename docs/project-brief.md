@@ -1,7 +1,7 @@
 # Project brief — 小小夢魔：星夜理財夢
 
 **Status:** Reference-rule redesign; implementation and release verification in progress
-**Requirements version:** 0.8
+**Requirements version:** 0.9
 **Decision owner:** User / project owner
 
 ## Goal
@@ -22,7 +22,7 @@ The owner rejected the earlier design and identified two concrete school-day exa
 
 ## Gameplay and outputs
 
-- **Controls:** Arrow keys/WASD move the avatar; reach the glowing in-world marker, then click it or press E/Enter/Space. Touch devices have an on-screen pad.
+- **Controls:** Arrow keys/WASD move the Blender-made low-poly 3D character; reach the glowing in-world marker, then click it or press E/Enter/Space. Touch devices have an on-screen pad. The 3D model is rendered into a transparent Godot viewport and overlays the warm 2D scene art.
 - **Daily loop:** Choose among three plans, preview projected savings/happiness and explanation, then confirm. Balance updates by current savings + daily allowance − spending. Happiness is bounded from 0–20; the reference's mood modifiers and selected delayed events are applied.
 - **Chapters:** Days 1–5 are the home-to-school route with breakfast, supplies, rain, lunch, and missing eraser. Days 6–10 include weekend choices, the toy-shop goal, another eraser event, the fictional garden-risk event, and final breakfast. Each chapter scores up to 90 points.
 - **Keys:** The first chapter key follows completion of day five. The second key requires day-ten savings to meet the selected toy goal. Zero happiness ends the challenge early.
@@ -30,7 +30,7 @@ The owner rejected the earlier design and identified two concrete school-day exa
 
 ## MVP and non-goals
 
-Godot 4.7.2 GDScript, two explorable scene backdrops, original pixel-art UI, bundled Traditional Chinese font, existing Blender-made 3D key, and a static Web export for `https://rabbit-chun.github.io/game2b/`. Excluded: accounts, identity/analytics, multiplayer, real financial products, personalized recommendations, and learning-efficacy claims.
+Godot 4.7.2 GDScript, two explorable scene backdrops, original pixel-art UI, bundled Traditional Chinese font, Blender-made 3D player and key models, and a static Web export for `https://rabbit-chun.github.io/game2b/`. Excluded: accounts, identity/analytics, multiplayer, real financial products, personalized recommendations, and learning-efficacy claims.
 
 ## Constraints and risks
 
@@ -42,7 +42,7 @@ Godot 4.7.2 GDScript, two explorable scene backdrops, original pixel-art UI, bun
 
 ## Acceptance examples
 
-1. Start each difficulty and verify its starting balance, happiness, daily allowances, and savings goal.
+1. Start each difficulty and verify its starting balance, happiness, daily allowances, and savings goal; the Blender 3D player is visibly rendered while exploring.
 2. Walk to the day-one breakfast shop marker; a distant trigger fails, a nearby click or E opens three plans.
 3. Preview and confirm a choice; savings/happiness update and score is added. The day-eight missing-eraser task offers borrowing and purchase plans.
 4. Complete days 1–5 to receive key one and a score /90; complete days 6–10 to see the second score and goal result. Key two appears only when the goal is met.

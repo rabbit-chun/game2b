@@ -119,3 +119,5 @@ These normalized values are structured AI pre-scores, not observed outcomes. Non
 - User approval date: 2026-11-24
 
 > **Current scope D-010 (2026-11-25):** This tournament is historical evidence for the earlier concept selection. It does not describe the current playable loop. The owner has since requested the linked ten-day saving challenge with three difficulty/resource presets, daily preview-confirm choices and delayed events, adapted to walkable breakfast, eraser, and fictional garden situations. The current approved requirements are in `docs/requirements.md` v0.8; this owner-directed update supersedes the old one-screen budget/seed loop and associated acceptance rules.
+
+> **D-011 (2026-11-26):** The owner asked why no 3D appeared. The former implementation only exposed the Blender key on reward screens; the walking avatar and backgrounds were 2D. Current requirements v0.9 add a Blender-made 3D player rendered in Godot during exploration. This supplement reopens visual/Web acceptance and does not invalidate the historical concept tournament.

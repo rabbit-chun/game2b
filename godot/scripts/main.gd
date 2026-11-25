@@ -1,16 +1,7 @@
 extends Node3D
 
-class ExplorerAvatar extends Control:
+class ExplorerAvatar extends TextureRect:
 	var facing := 1.0
-	func _draw() -> void:
-		draw_rect(Rect2(11, 1, 18, 13), Color("#f0c69a"))
-		draw_rect(Rect2(7, 0, 25, 7), Color("#d59a45"))
-		draw_rect(Rect2(10, 14, 21, 19), Color("#e9bd48"))
-		draw_rect(Rect2(13, 20, 4, 3), Color("#312b36"))
-		draw_rect(Rect2(24, 20, 4, 3), Color("#312b36"))
-		draw_rect(Rect2(13, 33, 7, 6), Color("#47364a"))
-		draw_rect(Rect2(23, 33, 7, 6), Color("#47364a"))
-		draw_rect(Rect2(12 if facing > 0 else 25, 7, 3, 3), Color("#322b35"))
 
 const GOLD := Color("#ffd77a")
 const INK := Color("#10273a")
@@ -48,6 +39,8 @@ var history: Array[Dictionary] = []
 var game_over := false
 var key_model: Node3D
 var reward_spin := 0.0
+var character_viewport: SubViewport
+var character_model_root: Node3D
 var explorer_root: Control
 var avatar: ExplorerAvatar
 var mission_marker: PanelContainer
@@ -84,9 +77,9 @@ func _step_explorer(direction: Vector2) -> void:
 	if direction == Vector2.ZERO or not is_instance_valid(avatar): return
 	var size := get_viewport().get_visible_rect().size
 	avatar.position += direction.normalized() * 38.0
-	avatar.position.x = clampf(avatar.position.x, 28, size.x - 48)
-	avatar.position.y = clampf(avatar.position.y, size.y * 0.40, size.y - 70)
-	if direction.x != 0: avatar.facing = signf(direction.x)
+	avatar.position.x = clampf(avatar.position.x, 28, size.x - avatar.size.x - 28)
+	avatar.position.y = clampf(avatar.position.y, size.y * 0.40, size.y - avatar.size.y - 12)
+	if direction.x != 0: _face_explorer(signf(direction.x))
 	avatar.queue_redraw()
 	_update_interaction_hint()
 
@@ -104,17 +97,27 @@ func _move_explorer(delta: float) -> void:
 		"down": direction.y += 1
 	if direction.length() > 0:
 		direction = direction.normalized()
-		if direction.x != 0: avatar.facing = signf(direction.x)
+		if direction.x != 0: _face_explorer(signf(direction.x))
 		var size := get_viewport().get_visible_rect().size
 		avatar.position += direction * 250.0 * delta
-		avatar.position.x = clampf(avatar.position.x, 28, size.x - 48)
-		avatar.position.y = clampf(avatar.position.y, size.y * 0.40, size.y - 70)
+		avatar.position.x = clampf(avatar.position.x, 28, size.x - avatar.size.x - 28)
+		avatar.position.y = clampf(avatar.position.y, size.y * 0.40, size.y - avatar.size.y - 12)
 		avatar.queue_redraw()
 	_update_interaction_hint()
 
+func _face_explorer(horizontal_direction: float) -> void:
+	if not is_instance_valid(avatar): return
+	avatar.facing = horizontal_direction
+	if is_instance_valid(character_model_root):
+		character_model_root.rotation.y = -PI * 0.5 if horizontal_direction > 0 else PI * 0.5
+
+func _explorer_point() -> Vector2:
+	if not is_instance_valid(avatar): return Vector2.ZERO
+	return avatar.position + Vector2(avatar.size.x * 0.5, avatar.size.y * 0.90)
+
 func try_interact() -> void:
 	if view != "explore" or not is_instance_valid(avatar): return
-	if avatar.position.distance_to(mission_position) > 92.0:
+	if _explorer_point().distance_to(mission_position) > 92.0:
 		explorer_hint.text = "再靠近一點，才能和任務人物說話喔！"
 		return
 	panel.visible = true
@@ -122,7 +125,7 @@ func try_interact() -> void:
 
 func _update_interaction_hint() -> void:
 	if view != "explore" or not is_instance_valid(avatar): return
-	var near := avatar.position.distance_to(mission_position) <= 92.0
+	var near := _explorer_point().distance_to(mission_position) <= 92.0
 	explorer_hint.text = ("點任務牌或按 E／Enter，開始第 %d 天任務！" % day) if near else "用方向鍵走到發亮的任務地點。"
 	if is_instance_valid(mission_marker): mission_marker.modulate = Color.WHITE if near else Color(0.83, 0.83, 0.83, 0.94)
 
@@ -144,9 +147,16 @@ func _show_exploration() -> void:
 	var size := get_viewport().get_visible_rect().size
 	avatar = ExplorerAvatar.new()
 	avatar.name = "PlayerExplorer"
-	avatar.custom_minimum_size = Vector2(38, 40)
-	avatar.position = Vector2(size.x * 0.16, size.y * 0.76)
+	avatar.texture = character_viewport.get_texture()
+	avatar.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	avatar.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	avatar.custom_minimum_size = Vector2(104, 136)
+	avatar.size = Vector2(104, 136)
+	avatar.position = Vector2(size.x * 0.16 - 52, size.y * 0.76 - 122)
+	avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	avatar.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	explorer_root.add_child(avatar)
+	if is_instance_valid(character_model_root): character_model_root.rotation.y = 0.0
 	mission_position = Vector2(size.x * (0.73 if at_school else 0.51), size.y * 0.62)
 	mission_marker = _panel(Color("#fff0ba"), 0.98)
 	mission_marker.position = mission_position - Vector2(70, 43)
@@ -227,6 +237,54 @@ func _make_world() -> void:
 		key_model.scale = Vector3.ONE * 0.35
 		key_model.visible = false
 		add_child(key_model)
+	_make_character_preview()
+
+func _make_character_preview() -> void:
+	character_viewport = SubViewport.new()
+	character_viewport.name = "DreamExplorer3DViewport"
+	character_viewport.size = Vector2i(256, 320)
+	character_viewport.transparent_bg = true
+	character_viewport.own_world_3d = true
+	character_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	add_child(character_viewport)
+	var stage := Node3D.new()
+	stage.name = "ExplorerStudio"
+	character_viewport.add_child(stage)
+	var environment_node := WorldEnvironment.new()
+	var studio_environment := Environment.new()
+	studio_environment.background_mode = Environment.BG_COLOR
+	studio_environment.background_color = Color(0, 0, 0, 0)
+	studio_environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+	studio_environment.ambient_light_color = Color("#ffe7c2")
+	studio_environment.ambient_light_energy = 0.62
+	studio_environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+	environment_node.environment = studio_environment
+	stage.add_child(environment_node)
+	var key_light := DirectionalLight3D.new()
+	key_light.rotation_degrees = Vector3(-25, -25, 0)
+	key_light.light_color = Color("#fff0d7")
+	key_light.light_energy = 1.15
+	stage.add_child(key_light)
+	var fill_light := OmniLight3D.new()
+	fill_light.position = Vector3(1.4, 1.8, 2.4)
+	fill_light.light_color = Color("#a6d6d3")
+	fill_light.light_energy = 0.35
+	fill_light.omni_range = 5.0
+	stage.add_child(fill_light)
+	var character_camera := Camera3D.new()
+	character_camera.position = Vector3(0, 1.05, 4.0)
+	character_camera.projection = Camera3D.PROJECTION_ORTHOGONAL
+	character_camera.size = 2.05
+	character_camera.current = true
+	stage.add_child(character_camera)
+	character_camera.look_at(Vector3(0, 0.93, 0), Vector3.UP)
+	var character_scene: PackedScene = load("res://assets/dream_explorer.glb")
+	if character_scene:
+		character_model_root = character_scene.instantiate()
+		character_model_root.name = "BlenderDreamExplorer"
+		character_model_root.scale = Vector3.ONE * 0.96
+		character_model_root.rotation.y = 0.0
+		stage.add_child(character_model_root)
 
 func _add_box(label: String, pos: Vector3, size: Vector3, color: Color, metallic: float) -> void:
 	var mesh := BoxMesh.new()
@@ -585,4 +643,3 @@ func _update_badge() -> void:
 		key_badge.text = "鑰匙 %d / 2" % keys
 	if is_instance_valid(score_badge):
 		score_badge.text = "得分 %d" % (scores[0] + scores[1])
-

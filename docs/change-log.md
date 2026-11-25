@@ -71,3 +71,10 @@
 - Added per-day in-scene movement/trigger, preview-and-confirm choices, savings and happiness tracking, delayed outcomes, breakfast and missing-eraser scenarios, and a fictional garden-risk lesson.
 - Split days into two five-day chapters with separate scores. Key two now requires the selected day-ten savings goal.
 - Updated requirements to v0.8, brief, traceability, project state, and skills audit; local Godot import and headless run passed. Fresh Web export and public acceptance remain pending.
+
+## v0.11 — Show Blender 3D player in exploration (2026-11-26)
+
+- Identified why the prior game looked fully 2D: SVG backgrounds covered the 3D viewport; the moving avatar was custom 2D rectangles and the GLB key appeared only on rewards.
+- Created an original low-poly dream explorer in Blender 5.3, saving editable `.blend` source, reproducible builder, and web-ready GLB.
+- Replaced the drawn avatar with a transparent Godot SubViewport-rendered GLB that moves with the existing route controls; tuned size, front-facing angle, and lighting.
+- Updated requirements to v0.9 and reopened Godot/runtime/Web/public visual verification.

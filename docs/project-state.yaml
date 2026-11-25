@@ -1,11 +1,11 @@
 project_id: game2b-star-night-finance
 mode: guided
-current_phase: sdlc-operate
-requirements_version: 0.8
+current_phase: sdlc-verify
+requirements_version: 0.9
 gate_status: approved
 dt_handoff: approved
-sdlc_release: approved
-final_acceptance: approved
+sdlc_release: pending
+final_acceptance: pending
 confirmed:
   - "Audience: elementary school children"
   - "Subject: everyday money management and introductory investing literacy"
@@ -17,6 +17,7 @@ confirmed:
   - "Education profile selected: Learning-first; L/E/M/A = 50/15/10/25; G/C penalties = 15/10"
   - "No G or C hard-elimination thresholds; use proposed measurable indicators"
   - "Owner-directed revision: adapt the linked ten-day saving challenge to walkable breakfast, school eraser, delayed-event, and fictional garden scenarios"
+  - "Owner-directed change D-011: Blender-made 3D player must be visible during exploration, not only a key reward on result screens"
   - "Visual direction: warm pixel-art scenes; retain the Blender dream key as the 3D reward reveal"
 assumptions:
   - "A short, single-player experience is the default"
@@ -39,6 +40,8 @@ artifacts:
   instructor_rubric: docs/instructor-rubric.md
 required_tests:
   - "Godot project imports and runs on Godot 4.7.2 without script errors"
+  - "Blender GLB player is visible in the route and classroom exploration scenes and follows movement controls"
+  - "Previously validated ten-day finance flow, keys, scores, and outcomes continue to work with the 3D player"
   - "All three difficulties initialize their reference savings, happiness, allowance schedule, and goal"
   - "Player walks to and triggers breakfast, previews choices, and confirms a plan"
   - "Day-five completion awards key one and score; the school eraser task offers borrow and purchase options"
@@ -47,18 +50,22 @@ required_tests:
   - "New Godot Web export loads from the GitHub Pages path with all assets"
 passed_tests:
   - "Godot 4.7.2 project import and headless scene startup completed without GDScript errors"
+  - "Blender 5.3 created editable assets/dream_explorer.blend and godot/assets/dream_explorer.glb (21 model parts)"
+  - "Godot imported dream_explorer.glb and loaded its transparent SubViewport without errors"
+  - "Godot 3D acceptance harness verified avatar renders from the SubViewport texture and follows walking input"
+  - "Godot 3D acceptance harness completed ten-day target-success and target-miss routes, checking scores and key gating"
+  - "Visible Godot desktop preview confirmed a forward-facing, lit 3D player model in the walkable route scene"
   - "Temporary Godot acceptance harness verified exact Easy/Medium/Hard settings and allowance arrays"
   - "Acceptance harness verified keyboard movement, distant mission rejection, and nearby mission interaction"
   - "Acceptance harness completed all ten days: first key/chapter score, second key when Medium savings met 174, and no second key when Easy savings missed 260"
   - "Acceptance harness verified the final progress summary and both chapter scores"
-  - "Godot Web release export produced index.html/index.js/index.wasm and index-b3c31c6cc64e.pck (8,967,212 bytes)"
-  - "Public Pages build loaded the new b3c31c6cc64e PCK; browser verified difficulty choice, route movement, nearby breakfast trigger, choice preview, and confirmation"
-  - "git push updated origin/main to fb1476c80cf67402b9c86b4d5136137615e58ab3"
+  - "A new Web export and public browser walkthrough for the 3D model are pending"
 known_limitations:
   - "The exported WebAssembly and bundled CJK font make the first download relatively large"
   - "During browser verification, the unqualified Pages URL returned a cached old shell; the versioned URL query served the new index and package. README records the cache-busting version link."
   - "The educational game has not yet been playtested with children or reviewed by a financial-literacy educator"
   - "Tournament ratings are AI pre-scores with low confidence, not user research"
-  - "The Blender Toolkit add-on/config is absent; Blender 5.3 itself is installed, but its command-line help exited 1 without output. Existing Blender-made dream-key GLB remains integrated."
+  - "The Blender Toolkit add-on/config is absent; Blender 5.3 itself is installed and verified. Existing Blender-made dream-key GLB remains integrated."
   - "The Godot editor emitted safe-save warnings because Windows app settings are restricted; headless project load, scene startup, and release export still returned exit code 0."
   - "Physical mobile-device touch behavior and all ten days in a mobile browser were not checked; deterministic end-to-end rules were exercised in a local Godot acceptance harness."
+  - "3D player Web performance and mobile-scale appearance require verification in the new exported build."
