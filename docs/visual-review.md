@@ -1,6 +1,6 @@
 # Visual review — warm pixel-art school journey
 
-**Status:** D-008 visual reference retained; new journey and ten-day gameplay review in progress.
+**Status:** D-008 warm pixel visual direction retained; the D-010 ten-day Web build is published and browser-checked.
 
 ## Visual language
 
@@ -11,11 +11,11 @@
 
 ## Revised interaction review
 
-D-010 changed the primary loop to daily choices over two five-day chapters. Scene marker movement and trigger, choice preview/confirmation, resources, per-chapter scores, conditional second key, and final progress recap require public browser acceptance against the new build. Older public screenshots and walkthroughs refer to superseded builds and do not count as evidence for this revision.
+D-010 changed the primary loop to daily choices over two five-day chapters. The published browser check confirmed the new difficulty screen, keyboard walking to the breakfast marker, nearby task trigger, choice preview and confirmation. A local Godot acceptance harness completed both goal-success and goal-miss routes and verified chapter scores and key gating. Older public screenshots and walkthroughs refer to superseded builds and do not count as evidence for this revision.
 
 ## Open visual checks
 
 - Readability at the desktop and narrow mobile viewport sizes.
-- Public browser play through day one and the missing-eraser task.
-- Both chapter results, goal met/not met endings, and 3D key display.
+- Public browser play through the school missing-eraser task and both chapter results remains a useful additional visual check; local Godot harness covered these branches.
+- Full-size wide desktop and mobile viewport rendering can receive further visual polish.
 - Physical mobile touch behavior; not yet checked.

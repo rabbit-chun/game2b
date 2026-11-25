@@ -6,7 +6,7 @@
 
 ## 線上遊玩與部署
 
-目前部署目標是 GitHub Pages 專案根目錄，遊戲入口為根目錄 `index.html`，公開網址為 <https://rabbit-chun.github.io/game2b/>。GitHub Pages 可直接由 `main` 分支根目錄發布；Netlify 的 publish directory 設為 `.`，不需建置命令。
+目前部署目標是 GitHub Pages 專案根目錄，遊戲入口為根目錄 `index.html`，公開網址為 <https://rabbit-chun.github.io/game2b/>。本次版本識別連結為 <https://rabbit-chun.github.io/game2b/?release=fb1476c>。若瀏覽器仍顯示舊版，可使用版本連結重新載入。GitHub Pages 可直接由 `main` 分支根目錄發布；Netlify 的 publish directory 設為 `.`，不需建置命令。
 
 ## 從 Godot 重新匯出
 
